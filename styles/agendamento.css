@@ -1,0 +1,174 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', arial, sans-serif;
+}
+
+#voltar{
+    position: absolute;
+    left: 10px;
+    margin-top: 100px;
+    background: gold;
+    padding: 5px;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+    transition: 0.3s;
+} 
+#voltar:hover{
+    color: white;
+   
+}
+body {
+    background-color: #111;
+    color: white;
+    text-align: center;
+}
+#date{
+  
+  width: 100%;
+  padding: 10px;
+  
+  border-radius: 5px;
+}
+  /*cabeçalho*/
+.hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #111;
+    padding: 15px 0;
+    border-bottom: 3px solid white;
+    height: 30vh;
+    
+}
+.hero nav{
+    margin-top: 40px;
+}
+.hero nav a{
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    margin: 20px;
+}
+.hero nav a:hover {
+    background: gold;
+    color: black;
+}
+#img_logo{
+ width: 100px;
+ margin-right: 40px;
+}
+main{
+    margin-top: 50px;
+}
+.barbeiro {
+   margin: 0 auto;
+    padding: 20px;
+    max-width: 400px;
+    background: #222;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(255, 215, 0, 0.5);
+    margin-top: 10px;
+}
+
+#escolha {
+  
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+} 
+
+/*corpo*/
+.agendamento, .servicos {
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 400px;
+    background: #222;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(255, 215, 0, 0.5);
+}
+.estilo-corte{ 
+  background: #222;
+ box-shadow: 0px 0px 10px rgba(255, 215, 0, 0.5);
+ padding: 7px;
+ cursor: pointer;
+}
+.estilo-corte:hover{ 
+  background: #333;
+  
+ box-shadow: 0px 0px 10px gold;
+}
+h2 {
+    color: gold;
+    margin-bottom: 10px;
+}
+
+.dias {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+.dia {
+    padding: 10px;
+    background: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.dia[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+select, button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+button {
+    width: auto;
+    padding: 10px 20px; 
+    cursor: pointer;
+    margin-top: 20px;
+    color: black;
+    background: gold;
+}
+
+button:hover {
+    color: white;
+}
+
+#info{
+  padding: 20px;
+  background: #222;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 0px 10px rgba(255, 215, 0, 0.5);
+  width: 30%;
+  min-width: 400px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+#info input{
+  margin: 10px;
+  width: 80%;
+  padding: 5px;
+  
+  border-radius: 15px;
+}
