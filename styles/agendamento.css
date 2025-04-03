@@ -1,174 +1,224 @@
-/* Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', arial, sans-serif;
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  
 }
 
-#voltar{
-    position: absolute;
-    left: 10px;
-    margin-top: 100px;
-    background: gold;
-    padding: 5px;
-    border-radius: 10px;
-    cursor: pointer;
-    text-decoration: none;
-    color: black;
-    transition: 0.3s;
-} 
-#voltar:hover{
-    color: white;
-   
-}
-body {
+ #logo_name{
+    width: 100px;
+    margin-right: 60px;
+  }
+  
+  .hero {
+      background: #111;
+      padding: 30px 0;
+      border-bottom: 3px solid white;
+  }
+  
+  .hero nav{
+    margin-top: 20px;
+  }
+  
+  .hero nav a {
+      text-decoration: none;
+      color: white;
+      font-size: 18px;
+      padding: 10px 15px;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+  }
+  
+  .hero nav a:hover {
+      background: gold;
+      color: black;
+  }
+  
+   #voltar{
+  
+      position: absolute;
+  
+      left: 10px;
+      margin-top: 50px;
+      background: gold;
+      padding: 5px;
+      border-radius: 10px;
+      cursor: pointer;
+      text-decoration: none;
+      color: black;
+      transition: 0.3s;
+  } 
+  
+  #voltar:hover{
+      color: white;
+
+  }
+  
+  body{
     background-color: #111;
     color: white;
     text-align: center;
 }
-#date{
+
+ .main{
+   margin: 0 auto;
+   margin-top: 60px;
+   padding: 10px;
+   width: 90%;
+   height: auto;
+   gap: 50px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+ }
+ 
+  .escolha-barbeiro{
+    padding: 30px;
+   
+    box-shadow: 0px 0px 10px rgba(255, 215, 0, 0.5);
+    border-radius: 10px;
+    display: flex;
+    width: 95%;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
   
-  width: 100%;
-  padding: 10px;
-  
-  border-radius: 5px;
-}
-  /*cabeçalho*/
-.hero {
+  .escolha-barbeiro form{
+   width: 100%;
     display: flex;
     flex-direction: column;
+      align-items: center;
     justify-content: center;
-    align-items: center;
-    background: #111;
-    padding: 15px 0;
-    border-bottom: 3px solid white;
-    height: 30vh;
+    gap: 20px;
+  }
+  
+  .escolha-barbeiro form select{
+    border-radius: 10px;
+ 
+    padding: 10px;
+
+    width: 80%;
+  }
+  
+  /* comeca em data ate o usuario*/
+  
+  
+  .agendamento{
     
-}
-.hero nav{
-    margin-top: 40px;
-}
-.hero nav a{
-    text-decoration: none;
-    color: white;
-    font-size: 18px;
-    padding: 10px 15px;
-    border-radius: 5px;
-    transition: all 0.3s ease;
-    margin: 20px;
-}
-.hero nav a:hover {
-    background: gold;
-    color: black;
-}
-#img_logo{
- width: 100px;
- margin-right: 40px;
-}
-main{
-    margin-top: 50px;
-}
-.barbeiro {
-   margin: 0 auto;
-    padding: 20px;
-    max-width: 400px;
-    background: #222;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(255, 215, 0, 0.5);
-    margin-top: 10px;
-}
-
-#escolha {
+     padding: 10px;
+     width: 100%;
+     display: flex;
+     flex-direction: column;
+  }   
   
-    padding: 10px;
-    margin-top: 10px;
-    border: none;
-    border-radius: 5px;
-} 
-
-/*corpo*/
-.agendamento, .servicos {
-    margin: 20px auto;
-    padding: 20px;
-    max-width: 400px;
-    background: #222;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(255, 215, 0, 0.5);
-}
-.estilo-corte{ 
-  background: #222;
- box-shadow: 0px 0px 10px rgba(255, 215, 0, 0.5);
- padding: 7px;
- cursor: pointer;
-}
-.estilo-corte:hover{ 
-  background: #333;
+  .data{
+         display: flex;
+         flex-direction: column;
+         padding: 30px;
+         box-shadow: 0px 0px 10px rgba(255, 215, 0, 0.5);
+         border-radius: 10px;
+         align-items: center;
+         justify-content: center;
+         gap: 20px;
+    }
   
- box-shadow: 0px 0px 10px gold;
-}
-h2 {
-    color: gold;
-    margin-bottom: 10px;
-}
-
-.dias {
+ .data form{
+     width: 100%;
     display: flex;
-    justify-content: space-around;
-    margin-top: 10px;
-}
-
-.dia {
-    padding: 10px;
-    background: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-.dia[disabled] {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-select, button {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    border: none;
-    border-radius: 5px;
-}
-
-button {
-    width: auto;
-    padding: 10px 20px; 
-    cursor: pointer;
-    margin-top: 20px;
-    color: black;
-    background: gold;
-}
-
-button:hover {
-    color: white;
-}
-
-#info{
-  padding: 20px;
-  background: #222;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0px 0px 10px rgba(255, 215, 0, 0.5);
-  width: 30%;
-  min-width: 400px;
+    flex-direction: column;
+      align-items: center;
+    justify-content: center;
+    
+ }
+ 
+ /*input*/ 
+#data{
+  padding: 10px;
+  width: 90%;
+  border-radius: 10px;
   text-align: center;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto;
 }
-#info input{
-  margin: 10px;
-  width: 80%;
-  padding: 5px;
+       
+   .hora{
+         display: flex;
+         flex-direction: column;
+         padding: 30px;
+           box-shadow: 0px 0px 10px rgba(255, 215, 0, 0.5);
+         border-radius: 10px;
+         border: 1px solid black;
+         align-items: center;
+         justify-content: center;
+         gap: 20px;
+    }
   
-  border-radius: 15px;
-}
+ .hora form{
+       width: 100%;
+       
+ }
+ 
+ .hora select{
+    padding: 10px;
+    width: 90%;
+    border-radius: 10px;
+ }
+ 
+   .servicos{
+         display: flex;
+         flex-direction: column;
+         padding: 30px;
+         border: 1px solid black;
+         align-items: center;
+           box-shadow: 0px 0px 10px rgba(255, 215, 0, 0.5);
+         border-radius: 10px;
+         justify-content: center;
+         gap: 20px;
+    }
+  
+ .servicos form{
+       width: 100%;
+      
+ }
+ 
+ .servicos select{
+    padding: 10px;
+    width: 90%;
+    border-radius: 10px;
+ }
+ 
+ .dados-cliente{
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+ }
+ 
+ .dados{
+     box-shadow: 0px 0px 10px rgba(255, 215, 0, 0.5);
+         border-radius: 10px;
+   width: 90%;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   padding: 15px;
+   height: 30vh;
+   
+ }
+ .dados input{
+   padding: 5px;
+   width: 90%;
+ }
+ .dados-cliente button{
+   margin-top: 10px;
+   padding: 30px;
+   border-radius: 7px;
+   background-color: gold;
+   color: black;
+   cursor: pointer;
+   transition: 0.3s;
+ }
+  .dados-cliente button:hover{
+    color: white;
+  }

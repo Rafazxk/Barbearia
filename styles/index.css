@@ -203,19 +203,18 @@
   
   /* Responsividade celulares e tablets*/
   @media (max-width: 768px) {
+   
       .hero {
           flex-direction: column; 
           text-align: center;  
-          height: 60vh;
+          height: 40vh;
       }
-  
+     
       .hero nav {
         display: flex;
-          flex-direction: column; /* Torna os itens do menu em coluna */
-          gap: 10px; /* Menor espaçamento entre os itens */
-      }
+          flex-direction: column;
+          gap: 10px;
   
-     
       .main_image img {
           width: 200px; 
           height: auto; 
@@ -226,28 +225,29 @@
       color: white;
       font-size: 15px;
       }
-      /* Ajustes na rolagem dos cards */
+   
       .cards {
-          flex-wrap: wrap; /* Permite que os cards que não cabem na linha "quebrem" para a próxima linha */
-          gap: 10px; /* Menor espaçamento entre os cards */
+
+          flex-wrap: wrap; 
+          gap: 10px;
       }
   
       .card-container {
-          flex: 0 0 120px; /* Tamanho menor para os cards em telas pequenas */
+          flex: 0 0 120px; 
       }
   
       .card {
-          height: auto; /* Ajuste de altura dos cards */
-          width: 120px; /* Garante um tamanho fixo para os cards */
+          height: auto; 
+          width: 120px;
       }
   
       .card img {
-          width: 70px; /* Ajusta o tamanho das imagens dentro dos cards */
+          width: 70px; 
           height: 70px;
       }
   
       .card-name {
-          font-size: 16px; /* Tamanho de fonte ajustado para telas pequenas */
+          font-size: 16px; 
       }
   }
   #contato{
@@ -279,7 +279,7 @@
     margin-top: 10px;
    }
    .contato_dois img{
-    width: 40px;
+    width: 50px;
    }
    .local{
     margin-top: 60px;
