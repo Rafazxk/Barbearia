@@ -1,6 +1,19 @@
 <?php
 include "conexao.php";
 
+session_start();
+
+if (!isset($_SESSION['usuario_id']) || !isset($_SESSION['barbeiro_id'])) {
+    // Redireciona para a tela de login se não estiver logado
+    header("Location: login.html");
+    exit;
+}
+
+
+$barbeiro_id = $_SESSION['barbeiro_id'];
+
+
+
 // Verifica se um ID de barbeiro foi passado
 $barbeiro_id = isset($_GET['id']) ? $_GET['id'] : null;
 

@@ -1,7 +1,9 @@
 <?php
+
 include "conexao.php";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_GET['id'])) {
+    // Lógica de novo agendamento
     $nome = $_POST["nome"];
     $telefone = $_POST["telefone"];
     $barbeiro_id = $_POST["barbeiro_id"];
@@ -9,15 +11,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $hora = $_POST["hora"];
     $servico = $_POST["servico"];
 
-    // cliente ja existe?
-    //veifica pelo telefone
-    
+    // Verifica cliente
     $stmt = $conn->prepare("SELECT id FROM cliente WHERE telefone = ?");
     $stmt->execute([$telefone]);
     $cliente = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$cliente) {
-        // Insere o novo cliente
         $stmt = $conn->prepare("INSERT INTO cliente (nome, telefone) VALUES (?, ?)");
         $stmt->execute([$nome, $telefone]);
         $cliente_id = $conn->lastInsertId();
@@ -25,104 +24,76 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $cliente_id = $cliente['id'];
     }
 
-    // Inserir o agendamento na tabela agendamento_novo
+    // Insere agendamento
     $stmt = $conn->prepare("INSERT INTO agendamento_novo (barbeiro_id, cliente_id, data, hora, servico) VALUES (?, ?, ?, ?, ?)");
-    if ($stmt->execute([$barbeiro_id, $cliente_id, $data, $hora, $servico])) {
-        echo "Agendamento realizado com sucesso!";
+    $stmt->execute([$barbeiro_id, $cliente_id, $data, $hora, $servico]);
+
+    // Redireciona para si mesmo com o ID
+    $agendamento_id = $conn->lastInsertId();
+    header("Location: concluido.php?id=$agendamento_id");
+    exit;
+}
+
+// Exibe os dados do agendamento (se ID estiver definido)
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+    $stmt = $conn->prepare("SELECT a.id, a.data, a.hora, s.nome AS servico, b.nome AS barbeiro
+                            FROM agendamento_novo a
+                            JOIN servico s ON a.servico = s.id
+                            JOIN barbeiro b ON a.barbeiro_id = b.id
+                            WHERE a.id = ?");
+    $stmt->execute([$id]);
+    $agendamento = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($agendamento) {
+        $agendamento_id = $agendamento['id'];
+        $data = $agendamento['data'];
+        $hora = $agendamento['hora'];
+        $servico = $agendamento['servico'];
+        $barbeiro = $agendamento['barbeiro'];
     } else {
-        echo "Erro ao agendar.";
+        echo "Agendamento não encontrado!";
+        exit;
     }
 }
 ?>
-
- <?php /*
- if($barbeiro_id == 1){
-  return "Tharsys";  
- }else if($barbeiro_id == 2){
-   return "Kleyton";
- }
- else{
-   return "Gustavo";
- }
-*/
-?>
-
-
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agendamento</title>
-    <link rel="stylesheet" href="../styles/concluido.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agendamento</title>
+  <link rel="stylesheet" href="../styles/concluido.css">
 </head>
 <body>
-  <header>
-    <header class="hero">
-       <a href="index.html" id="voltar">voltar</a>
-       <img src="../imagens/tk_logo.png" id="logo_name">
-        <nav>
-            <a href="index.html" id="btn_home">Home</a>
-            <a href="index.html" id="btn_servicos">Serviços</a>            
-            <a href="index.html" id="btn_contato">Contato</a>
-        </nav>       
-    </header>
-    <main class="main">
-        <div class="tela_dados">
-            <h2 id="concluido">Agendamento Concluído com sucesso!</h2>
-        
-        <div class="data&hora">
-       
-          <p>data:  <?php echo $data; ?></p>
-           
-           <div>
-     
-          </div>
-        </div>
-         <div class="servico">
-          <?php 
-          
-          //imprime o corte
-          echo "<p>Serviço: " . 
-          $servico . "</p>";
-          
-          ?>
-         </div>
-         
-        
-         
-         <div class="barbeiro-id">
-           <?php 
-           echo "<p>Barbeiro: " .
-           $barbeiro_id . "</p>";
-           
-           ?>
-         </div>
-    <div class="btn-alterar">
-      <div class="alterar">
-      
-      <a href="edit.php?id=<?= $row['id'] ?>">Alterar</a>
-      
-      
-      
-      </div>
-    <div class="excluir">
-    <a href="excluir.php?id=<?=$barbeiro_id['id'] ?>" onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</a>
-   </div>
-    </div>
-        </div>
-  
-  
- 
+  <header class="hero">
+    <a href="index.html" id="voltar">voltar</a>
+    <img src="../imagens/tk_logo.png" id="logo_name">
+    <nav>
+      <a href="index.html" id="btn_home">Home</a>
+      <a href="index.html" id="btn_servicos">Serviços</a>
+      <a href="index.html" id="btn_contato">Contato</a>
+    </nav>
+  </header>
 
+  <main class="main">
+    <div class="tela_dados">
+      <h2 id="concluido">Agendamento Concluído com sucesso!</h2>
+
+      <p>Data: <?= htmlspecialchars($data) ?></p>
+      <p>Hora: <?= htmlspecialchars($hora) ?></p>
+      <p>Serviço: <?= htmlspecialchars($servico) ?></p>
+      <p>Barbeiro: <?= htmlspecialchars($barbeiro) ?></p>
+
+      <div class="acoes">
+        <a href="editar_agendamento.php?id=<?= $agendamento_id ?>">
+          <button>Alterar</button>
+        </a>
+        <a href="excluir_agendamento.php?id=<?= $agendamento_id ?>" onclick="return confirm('Deseja realmente excluir este agendamento?');">
+          <button>Excluir</button>
+        </a>
+      </div>
+    </div>
   </main>
-  
-  
-  
 </body>
 </html>
-
-
-
-

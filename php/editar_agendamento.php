@@ -34,7 +34,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt = $conn->prepare("UPDATE agendamento_novo SET data = ?, hora = ?, servico = ? WHERE id = ?");
     if ($stmt->execute([$data, $hora, $servico_id, $id])) {
         echo "Agendamento atualizado com sucesso!";
-        echo "<br><a href='barbeiro.php?id=".$agendamento['barbeiro_id']."'>Voltar</a>";
+        if (isset($agendamento['barbeiro_id'])) {
+            echo "<br><a href='concluido.php?id=".$id."'>Voltar</a>";
+            header("Location: concluido.php?id=$id");
+exit;
+        } else {
+            echo "<br><a href='concluido.php?id=".$id."'>Voltar</a>";
+        }
         exit;
     } else {
         echo "Erro ao atualizar!";
@@ -49,6 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Agendamento</title>
+    <link rel="stylesheet" href="../styles/edit.css">   
 </head>
 <body>
     <h2>Editar Agendamento</h2>
