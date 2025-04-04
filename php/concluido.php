@@ -64,10 +64,19 @@ if (isset($_GET['id'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Agendamento</title>
   <link rel="stylesheet" href="../styles/concluido.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
+<script>
+  if (Notification.permission === "granted") {
+    new Notification("Novo agendamento recebido!", {
+      body: "Um cliente acabou de agendar um horário.",
+      icon: "../imagens/tk_logo.png" // opcional
+    });
+  }
+</script>
   <header class="hero">
-    <a href="index.html" id="voltar">voltar</a>
+    <a href="agendamento.php" id="voltar">< Voltar</a>
     <img src="../imagens/tk_logo.png" id="logo_name">
     <nav>
       <a href="index.html" id="btn_home">Home</a>
@@ -95,5 +104,17 @@ if (isset($_GET['id'])) {
       </div>
     </div>
   </main>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    if ("Notification" in window) {
+      if (Notification.permission !== "granted") {
+        Notification.requestPermission();
+      }
+    }
+  });
+</script>
+
+
 </body>
 </html>

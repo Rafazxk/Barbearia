@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Poppins', bold, Sans-Serif;
+  font-family: 'Poppins', Sans-Serif;
 }
     #logo_name{
     width: 100px;
@@ -29,23 +29,24 @@
       color: black;
   }
   #voltar{
-  
+     font-weight: 700;
       position: fixed;
-  
       left: 10px;
       margin-top: 50px;
       background: gold;
-      padding: 5px;
+      padding: 10px;
       border-radius: 10px;
       cursor: pointer;
       text-decoration: none;
       color: black;
       transition: 0.3s;
       z-index: 1000;
+      transition: 0.4s;
   } 
+  
   #voltar:hover{
       color: white;
-
+      transform: scale(1.2);
   }
   body {  
     background: #111;
@@ -125,12 +126,29 @@
     color: white;
   }
   #concluido{
-    position: absolute;
-    top: 50px;
-    
-    
+  position: absolute;
+  top: 50px;
   }
-  
 p{
   font-size: 20px;
+}
+.acoes{
+  display: flex;
+  margin-top: 20px;
+  gap: 40px;
+  
+}
+
+.acoes a button{
+  background: gold;
+  border: none;
+  padding: 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: 0.4s;
+  font-weight: 700;
+}
+.acoes a button:hover{
+  color: white; 
+  transform: scale(1.3);
 }

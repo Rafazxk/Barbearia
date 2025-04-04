@@ -40,7 +40,9 @@ if ($barbeiro_id) {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
   
-   <header class="hero">
+    
+<body>  
+<header class="hero">
        <a href="../index.html" id="voltar">voltar</a>
        <img src="../imagens/tk_logo.png" id="logo_name">
         <nav>
@@ -49,8 +51,7 @@ if ($barbeiro_id) {
             <a href="index.html" id="btn_contato">Contato</a>
         </nav>       
     </header>
-    
-<body>  
+
   <main class="main">
     <h2>Agendamento de Serviço</h2>
 <div class="escolha-barbeiro">
@@ -117,7 +118,6 @@ if ($barbeiro_id) {
        </div>
             <button type="submit">Agendar</button>
          </form>
-         
        </div>
        
     <?php endif; ?>
@@ -133,7 +133,7 @@ if ($barbeiro_id) {
         }
 function formatarTelefone(input) {
     let telefone = input.value.replace(/\D/g, '');
-    // Remover tudo que não for número 
+    
 
     if (telefone.length > 11) telefone = telefone.slice(0, 11); // Limita ate 11 dígitos
 

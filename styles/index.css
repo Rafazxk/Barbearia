@@ -9,12 +9,12 @@
     margin-right: 40px;
   }
   body {
-      background: #333; /* Fundo mais escuro */
+      background: #333; 
       color: #ffffff;
       text-align: center;
   }
   
-  /* Ajuste na imagem de comunicação */
+  
   .comunicacao img {
       width: 50px;
       height: 50px;
@@ -22,7 +22,7 @@
       left: 0;
   }
   
-  /* NavBar */
+  
   .hero {
       background: #111;
       padding: 30px 0;
@@ -63,7 +63,7 @@
       color: white;
   }
   
-  /* Ajustes para a imagem principal */
+
   .main_image {
       position: relative;
       display: flex;
@@ -89,7 +89,7 @@
       width: 100%;
       height: 100%;
       background: url('../imagens/fundo.jpeg') center/cover no-repeat;
-      filter: blur(5px); /* Aplica o desfoque apenas na imagem de fundo */
+      filter: blur(5px); 
       z-index: -1;
   }
   
@@ -100,7 +100,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.7); /* Camada preta com 50% de opacidade */
+      background: rgba(0, 0, 0, 0.7); 
       z-index: -1;
   }
   
@@ -116,7 +116,7 @@
       z-index: 1;
   }
   
-  /* Seção Serviços */
+  
   #servicos {
     display: flex;
     flex-direction: column;
@@ -134,7 +134,7 @@
       color: white;
   }
   
-  /* Container para permitir o scroll horizontal */
+  
   .cards-container {
       overflow-x: auto;
       white-space: nowrap;
@@ -148,21 +148,20 @@
       cursor: grab;
   }
   
-  /* Estilização dos cards */
+  
   .card-container {
       background: #2a2a2a;
       padding: 15px;
       border-radius: 12px;
       box-shadow: 0 4px 8px rgba(255, 215, 0, 0.5);
-      flex: 0 0 150px; /* Define um tamanho fixo para os cards */
+      flex: 0 0 150px; 
       text-align: center;
       transition: 0.3s;
   }
   
-  /* Ajuste do tamanho dos cards */
   .card {
-      width: 100%; /* Ocupar todo o espaço do card-container */
-      height: 120px; /* Altura fixa */
+      width: 100%; 
+      height: 120px; 
       display: flex;
       align-items: center;
       justify-content: center;
@@ -170,12 +169,11 @@
       border-radius: 10px;
       overflow: hidden;
   }
-  
-  /* Ajuste das imagens dentro dos cards */
+ 
   .card img {
-      width: 80px; /* Mantém um tamanho adequado */
-      height: 80px; /* Mantém um tamanho adequado */
-      object-fit: contain; /* Garante que a imagem não ultrapasse o card */
+      width: 80px; 
+      height: 80px; 
+      object-fit: contain; 
   }
   
   .card-name {
@@ -184,7 +182,7 @@
       color: #fff;
   }
   
-  /* Ajuste do botão Ver Mais */
+ 
   #ver_mais {
       display: inline-block;
       margin-top: 20px;
@@ -200,83 +198,77 @@
   #ver_mais:hover {
      color: white;
   }
-  
-  /* Responsividade celulares e tablets*/
-  @media(max-width: 768px) {
+@media(max-width: 768px) {
     .hero {
-        flex-direction: column; 
-        text-align: center;  
-        height: auto; 
-        padding: 20px 0;
+          flex-direction: column; 
+          text-align: center;  
+          height: auto; 
+          padding: 20px 0;
     }
-
     .hero nav {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
+         display: flex;
+         flex-direction: column;
+         gap: 10px;
     }
-
     .hero nav a {
-        display: block;
-        padding: 12px;
-        width: 100%;
-        text-align: center;
+         display: block;
+         padding: 12px;
+         width: 100%;
+         text-align: center;
     }
-
     .main_image {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        max-height: 200vh;
-        height: 100vh;
-        padding: 20px 0;
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         justify-content: center;
+         max-height: 200vh;
+         height: 100vh;
+         padding: 20px 0;
     }
 
     .main_image img {
-        max-width: 200px;
-        width: 100%; 
-        height: auto;
+         max-width: 200px;
+         width: 100%; 
+         height: auto;
     }
 
     .text_second {
-        font-size: 16px;
-        bottom: 20px;
+         font-size: 16px;
+         bottom: 20px;
     }
 
     .cards-container {
-        overflow-x: auto;
-        display: flex;
-        justify-content: center;
+         overflow-x: auto;
+         display: flex;
+         justify-content: center;
     }
 
     .cards {
-        flex-wrap: nowrap; /* Mantém o scroll horizontal */
-        gap: 10px;
+         flex-wrap: nowrap; 
+         gap: 10px;
     }
 
     .card-container {
-        flex: 0 0 130px; /* Reduz um pouco para encaixar mais na tela */
+         flex: 0 0 130px; 
     }
 
     .card img {
-        width: 60px;
+         width: 60px;
         height: 60px;
     }
     #contato { 
-        border-top: 1px solid white;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        background: black;
-        color: white; 
-        height: 60vh;
-    }
-    
+         border-top: 1px solid white;
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         justify-content: center;
+         background: black;
+         color: white; 
+         height: 60vh;
+    }  
     .contatos{
-        align-items: center;
-        justify-content: center;
+         align-items: center;
+         justify-content: center;
          display: flex;
          gap: 50px;
          padding: 15px;
@@ -284,8 +276,8 @@
          border-radius: 10px;
          box-shadow: 0 8px 20px rgba(255, 215, 0, 0.5);
         }
-        .contato_um img{
-          width: 40px;
+        .contato_um a img{
+          width: 45px;
          } 
          .contato_um p{
           margin-top: 10px;
@@ -294,20 +286,15 @@
           margin-top: 10px;
          }
          .contato_dois img{
-          width: 40px;
+          width: 30px;
          }
          .local{
           margin-top: 60px;
          }
          .local img{
           width: 300px;
-         }
- 
-
-     
-}  /* <- Fechamento correto da media query */
-
-/* Agora vem as regras gerais para #contato */
+         }    
+}  
 #contato { 
     border-top: 1px solid white;
     display: flex;
@@ -320,12 +307,10 @@
 }
 
   @media (min-width: 768px) {
-    /* ajuste para uma tela maior */
     .hero {
         background: #111;
         padding: 30px 0;
-        border-bottom: 5px solid white;
-        
+        border-bottom: 5px solid white;   
     }    
     .hero h1 {
         font-size: 40px;
@@ -341,29 +326,24 @@
         padding: 10px 15px;
         border-radius: 5px;
         transition: all 0.3s ease;
-    
     }
-    
     .hero nav a:hover {
         background: gold;
         color: black;
     }
-
-    #contato{
-          
+    #contato{    
     border-top: 1px solid white;
     display: flex;
-   flex-direction: column;
-   align-items: center;
-   justify-content: center;
-   background: black;
-   color: white; 
-   height: 60vh;
-  
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: black;
+    color: white; 
+    height: 60vh; 
     }
     .contatos{
-       align-items: center;
-       justify-content: center;
+        align-items: center;
+        justify-content: center;
         display: flex;
         gap: 100px;
         padding: 15px;
@@ -389,15 +369,11 @@
         .local img{
          width: 300px;
         }
-
     footer{
         border-top: 2px solid white;
         background: black;
         color: white;
     }
-
-
-
   }
   
   
