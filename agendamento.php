@@ -1,7 +1,7 @@
 <?php
 include "conexao.php";
 
-// Definir horários fixos da barbearia
+// Definir horários
 $horarios_disponiveis = [
     "08:00", "09:00", "10:00", "11:00", "12:00",
     "13:00", "14:00", "15:00", "16:00", "17:00",
@@ -37,6 +37,7 @@ if ($barbeiro_id) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agendamento</title>
     <link rel="stylesheet" href="styles/agendamento.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
   
    <header class="hero">
@@ -49,7 +50,7 @@ if ($barbeiro_id) {
         </nav>       
     </header>
     
-<body>
+<body>  
   <main class="main">
     <h2>Agendamento de Serviço</h2>
 <div class="escolha-barbeiro">
@@ -107,11 +108,11 @@ if ($barbeiro_id) {
       
       <div class="dados">
             <label for="nome">Nome:</label>
-            <input type="text" name="nome" id="nome" required>
+            <input type="text" name="nome" id="nome" placeholder ="Insira seu nome" required>
             <br><br>
 
             <label for="telefone">Telefone:</label>
-            <input type="text" name="telefone" id="telefone" required oninput="formatarTelefone(this)" required>
+            <input type="text" name="telefone" id="telefone" placeholder ="Insira seu telefone" required oninput="formatarTelefone(this)" required>
             <br><br>
        </div>
             <button type="submit">Agendar</button>

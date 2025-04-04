@@ -68,18 +68,11 @@
     width: 80%;
     height: 60%;
     padding: 30px;
-    border: 1px solid gold;
+    box-shadow: 2px 4px 8px rgba(255, 215, 0, 0.5);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-  }
-  .data&hora{
-    display: flex;
-  
-    align-items: center;
-    
-    
   }
 
   .servico{

@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  
+  font-family: 'Poppins', bold, sans-serif;
 }
 
  #logo_name{
@@ -61,6 +61,7 @@
 }
 
  .main{
+ 
    margin: 0 auto;
    margin-top: 60px;
    padding: 10px;
@@ -73,13 +74,17 @@
    justify-content: center;
  }
  
+
+ /*inicio dos selects/inputs */
+ /*select ESCOLHA DOS BARBEIROS*/
+
   .escolha-barbeiro{
-    padding: 30px;
-   
+    padding: 40px;
     box-shadow: 0px 0px 10px rgba(255, 215, 0, 0.5);
     border-radius: 10px;
     display: flex;
-    width: 95%;
+    flex-direction: column;
+    width: 80%;
     align-items: center;
     justify-content: center;
     gap: 20px;
@@ -93,32 +98,41 @@
     justify-content: center;
     gap: 20px;
   }
-  
+  .escolha-barbeiro label{
+   font-size: 20px;
+  }
   .escolha-barbeiro form select{
     border-radius: 10px;
- 
-    padding: 10px;
-
+    font-size: 15px;
+    font-weight: bold;
+    padding: 20px;
     width: 80%;
+    text-align: center;
+    
   }
   
   /* comeca em data ate o usuario*/
   
-  
+ /* div responsavel pelo agendamento */
+ 
   .agendamento{
-    
+
      padding: 10px;
      width: 100%;
      display: flex;
      flex-direction: column;
   }   
   
+  /*select ESCOLHA DA DATA*/
+
   .data{
+         margin: 0 auto;
          display: flex;
-         flex-direction: column;
-         padding: 30px;
+         padding: 40px;
+         width:80%;
          box-shadow: 0px 0px 10px rgba(255, 215, 0, 0.5);
          border-radius: 10px;
+         flex-direction: column;
          align-items: center;
          justify-content: center;
          gap: 20px;
@@ -130,24 +144,29 @@
     flex-direction: column;
       align-items: center;
     justify-content: center;
-    
+    gap: 20px;
  }
- 
  /*input*/ 
+ .data form label{
+   font-size: 20px;
+ }
 #data{
-  padding: 10px;
-  width: 90%;
+  padding: 20px;
+  width: 80%;
   border-radius: 10px;
   text-align: center;
+  font-weight: bold;
 }
-       
+       /*select ESCOLHA DA HORA*/
+
    .hora{
+         margin: 0 auto;
+         width: 80%;
          display: flex;
          flex-direction: column;
-         padding: 30px;
-           box-shadow: 0px 0px 10px rgba(255, 215, 0, 0.5);
+         padding: 40px;
+         box-shadow: 0px 0px 10px rgba(255, 215, 0, 0.5);
          border-radius: 10px;
-         border: 1px solid black;
          align-items: center;
          justify-content: center;
          gap: 20px;
@@ -159,15 +178,22 @@
  }
  
  .hora select{
-    padding: 10px;
-    width: 90%;
+    padding: 20px;
+    width: 80%;
     border-radius: 10px;
+    text-align: center;
+    font-weight: bold;
+    
  }
- 
+
+ /*select ESCOLHA DOS SERVIÇOS*/
+
    .servicos{
+        margin: 0 auto;
+        width: 80%;
          display: flex;
          flex-direction: column;
-         padding: 30px;
+         padding: 40px;
          border: 1px solid black;
          align-items: center;
            box-shadow: 0px 0px 10px rgba(255, 215, 0, 0.5);
@@ -177,14 +203,19 @@
     }
   
  .servicos form{
+  
        width: 100%;
-      
+       display: flex;
+       align-items: center;
+       justify-content: center;
  }
  
  .servicos select{
-    padding: 10px;
-    width: 90%;
+    padding: 20px;
+    width: 80%;
     border-radius: 10px;
+    text-align: center;
+    font-weight: bold;
  }
  
  .dados-cliente{
@@ -193,22 +224,27 @@
    align-items: center;
    justify-content: center;
  }
- 
+ .dados-cliente h2{
+  margin-bottom: 50px;
+ }
  .dados{
-     box-shadow: 0px 0px 10px rgba(255, 215, 0, 0.5);
-         border-radius: 10px;
-   width: 90%;
+   box-shadow: 0px 0px 10px rgba(255, 215, 0, 0.5);
+   border-radius: 10px;
+   width: 80%;
    display: flex;
    flex-direction: column;
    align-items: center;
    justify-content: center;
-   padding: 15px;
-   height: 30vh;
+   padding: 30px;
+   
    
  }
+ 
  .dados input{
-   padding: 5px;
-   width: 90%;
+   padding: 20px;
+   width: 80%;
+   border-radius: 10px;
+   font-weight: bold;
  }
  .dados-cliente button{
    margin-top: 10px;
@@ -218,7 +254,11 @@
    color: black;
    cursor: pointer;
    transition: 0.3s;
+   border: none;
+   font-weight: bolder;
  }
   .dados-cliente button:hover{
     color: white;
+   
   }
+  

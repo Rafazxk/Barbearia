@@ -102,14 +102,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="btn-alterar">
       <div class="alterar">
       
-      <a href="">alterar</a>
+      <a href="edit.php?id=<?= $row['id'] ?>">Alterar</a>
       
       
       
       </div>
     <div class="excluir">
-          <a href="">excluir</a>
-
+    <a href="excluir.php?id=<?=$barbeiro_id['id'] ?>" onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</a>
    </div>
     </div>
         </div>
