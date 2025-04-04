@@ -55,13 +55,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agendamento</title>
-    <link rel="stylesheet" href="styles/concluido.css">
+    <link rel="stylesheet" href="../styles/concluido.css">
 </head>
 <body>
   <header>
     <header class="hero">
        <a href="index.html" id="voltar">voltar</a>
-       <img src="imagens/tk_logo.png" id="logo_name">
+       <img src="../imagens/tk_logo.png" id="logo_name">
         <nav>
             <a href="index.html" id="btn_home">Home</a>
             <a href="index.html" id="btn_servicos">Serviços</a>            

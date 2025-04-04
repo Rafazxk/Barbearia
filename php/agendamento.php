@@ -1,5 +1,5 @@
 <?php
-include "conexao.php";
+include_once "conexao.php";
 
 // Definir horários
 $horarios_disponiveis = [
@@ -36,13 +36,13 @@ if ($barbeiro_id) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agendamento</title>
-    <link rel="stylesheet" href="styles/agendamento.css">
+    <link rel="stylesheet" href="../styles/agendamento.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
   
    <header class="hero">
-       <a href="index.html" id="voltar">voltar</a>
-       <img src="imagens/tk_logo.png" id="logo_name">
+       <a href="../index.html" id="voltar">voltar</a>
+       <img src="../imagens/tk_logo.png" id="logo_name">
         <nav>
             <a href="index.html" id="btn_home">Home</a>
             <a href="index.html" id="btn_servicos">Serviços</a>            
