@@ -1,42 +1,34 @@
 <?php
 include_once "conexao.php";
-session_start();
 
-
-$barbeiro_id = $_GET['barbeiro_id'] ?? $_SESSION['barbeiro_id'] ?? null;
-$data_do_agendamento = $_GET['data'] ?? date("Y-m-d");
-
-if (!$barbeiro_id) {
-    echo "Barbeiro não especificado.";
-    exit;
-}
-
-$stmt = $conn->prepare("SELECT fechado FROM configuracoes_barbeiro WHERE barbeiro_id = ? AND data = ?");
-$stmt->execute([$barbeiro_id, $data_do_agendamento]);
-$config = $stmt->fetch(PDO::FETCH_ASSOC);
-$barbearia_fechada = $config && $config['fechado'] == 1;
-
-$horarios_todos = [
+// Definir horários
+$horarios_disponiveis = [
     "08:00", "09:00", "10:00", "11:00", "12:00",
     "13:00", "14:00", "15:00", "16:00", "17:00",
     "18:00", "19:00", "20:00"
 ];
 
-$horarios_disponiveis = [];
+// Recupera os serviços disponíveis no banco
+$stmt = $conn->prepare("SELECT id, nome, preco FROM servico");
+$stmt->execute();
+$servicos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-if (!$barbearia_fechada) {
+// Pegar o barbeiro da URL ou do formulário
+$barbeiro_id = $_GET["barbeiro_id"] ?? null;
+$data_selecionada = $_GET["data"] ?? date("Y-m-d");
+
+// Se um barbeiro foi escolhido, buscar horários ocupados
+$horarios_ocupados = [];
+
+if ($barbeiro_id) {
     $stmt = $conn->prepare("SELECT hora FROM agendamento_novo WHERE data = ? AND barbeiro_id = ?");
-    $stmt->execute([$data_do_agendamento, $barbeiro_id]);
+    $stmt->execute([$data_selecionada, $barbeiro_id]);
     $horarios_ocupados = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
-    $horarios_disponiveis = array_values(array_diff($horarios_todos, $horarios_ocupados));
-
-    $stmt = $conn->prepare("SELECT id, nome, preco FROM servico");
-    $stmt->execute();
-    $servicos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // Filtrar horários disponíveis
+    $horarios_disponiveis = array_values(array_diff($horarios_disponiveis, $horarios_ocupados));
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -84,23 +76,8 @@ if (!$barbearia_fechada) {
 
             <br>
       <div class="data">
-      
-      <?php
-$barbearia_fechada = false;
-if ($config && strtolower($config['motivo']) == 'fechado') {
-    $barbearia_fechada = true;
-}
-?>
-<?php if ($barbearia_fechada): ?>
-    <p style="color: red; font-weight: bold; margin-bottom: 1em;">
-        ⚠ A barbearia estará fechada nesta data (<?= htmlspecialchars($data_do_agendamento) ?>). Por favor, escolha outra data.
-    </p>
-<?php endif; ?>
-
-   
-
-<label for="data">Escolha a Data:</label>
-            <input type="date" name="data" id="data" value="<?= htmlspecialchars($data_do_agendamento ) ?>" required onchange="updateURL()">
+            <label for="data">Escolha a Data:</label>
+            <input type="date" name="data" id="data" value="<?= htmlspecialchars($data_selecionada) ?>" required onchange="updateURL()">
       </div>
             <br><br>
       <div class="hora">

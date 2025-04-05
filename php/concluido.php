@@ -10,33 +10,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_GET['id'])) {
     $data = $_POST["data"];
     $hora = $_POST["hora"];
     $servico = $_POST["servico"];
- 
-
-  // Agendamento vindo do form
-$data_agendada = $_POST['data'];
-$hora_agendada = $_POST['hora']; // formato HH:MM
-
-// Verifica configuração para o dia
-$stmt = $conn->prepare("SELECT fechado, horario_abertura, horario_fechamento FROM configuracoes_barbeiro WHERE barbeiro_id = ? AND data = ?");
-$stmt->execute([$barbeiro_id, $data_agendada]);
-$config = $stmt->fetch();
-
-if ($config && $config['fechado']) {
-    echo "<script>alert('A barbearia estará fechada nesta data!'); window.history.back();</script>";
-    exit;
-}
-
-if ($config) {
-    if (!empty($config['horario_abertura']) && !empty($config['horario_fechamento'])) {
-        if ($hora_agendada < $config['horario_abertura'] || $hora_agendada > $config['horario_fechamento']) {
-            echo "<script>alert('Horário fora do funcionamento configurado.'); window.history.back();</script>";
-            exit;
-        }
-    }
-}
-
- 
-
 
     // Verifica cliente
     $stmt = $conn->prepare("SELECT id FROM cliente WHERE telefone = ?");
