@@ -2,47 +2,42 @@
 include_once "conexao.php";
 session_start();
 
-// Unificar a obtenção do barbeiro_id e da data
-$barbeiro_id = $_SESSION['barbeiro_id'] ?? $_GET['barbeiro_id'] ?? $_POST['barbeiro_id'] ?? null;
-$data_do_agendamento = $_POST['data'] ?? $_GET['data'] ?? date("Y-m-d");
+
+$barbeiro_id = $_GET['barbeiro_id'] ?? $_SESSION['barbeiro_id'] ?? null;
+$data_do_agendamento = $_GET['data'] ?? date("Y-m-d");
 
 if (!$barbeiro_id) {
     echo "Barbeiro não especificado.";
     exit;
 }
 
-// Verificar se a barbearia está configurada como fechada
-$stmt = $conn->prepare("SELECT * FROM configuracoes_barbeiro 
-                        WHERE barbeiro_id = ? AND data = ?");
+$stmt = $conn->prepare("SELECT fechado FROM configuracoes_barbeiro WHERE barbeiro_id = ? AND data = ?");
 $stmt->execute([$barbeiro_id, $data_do_agendamento]);
 $config = $stmt->fetch(PDO::FETCH_ASSOC);
+$barbearia_fechada = $config && $config['fechado'] == 1;
 
-if ($config && strtolower($config['motivo']) === 'fechado') {
-    echo "<p style='color:red; font-weight:bold;'>⚠ A barbearia está fechada nesta data ({$data_do_agendamento}). Por favor, escolha outro dia.</p>";
-    exit;
-}
-
-// Definir horários
-$horarios_disponiveis = [
+$horarios_todos = [
     "08:00", "09:00", "10:00", "11:00", "12:00",
     "13:00", "14:00", "15:00", "16:00", "17:00",
     "18:00", "19:00", "20:00"
 ];
 
-// Buscar serviços
-$stmt = $conn->prepare("SELECT id, nome, preco FROM servico");
-$stmt->execute();
-$servicos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$horarios_disponiveis = [];
 
-// Buscar horários ocupados
-$horarios_ocupados = [];
-$stmt = $conn->prepare("SELECT hora FROM agendamento_novo WHERE data = ? AND barbeiro_id = ?");
-$stmt->execute([$data_do_agendamento, $barbeiro_id]);
-$horarios_ocupados = $stmt->fetchAll(PDO::FETCH_COLUMN);
+if (!$barbearia_fechada) {
+    $stmt = $conn->prepare("SELECT hora FROM agendamento_novo WHERE data = ? AND barbeiro_id = ?");
+    $stmt->execute([$data_do_agendamento, $barbeiro_id]);
+    $horarios_ocupados = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
-// Filtrar horários disponíveis
-$horarios_disponiveis = array_values(array_diff($horarios_disponiveis, $horarios_ocupados));
+    $horarios_disponiveis = array_values(array_diff($horarios_todos, $horarios_ocupados));
+
+    $stmt = $conn->prepare("SELECT id, nome, preco FROM servico");
+    $stmt->execute();
+    $servicos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 ?>
+
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>

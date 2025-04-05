@@ -1,5 +1,6 @@
 <?php
 include "conexao.php";
+
 session_start();
 
 if (!isset($_SESSION['usuario_id']) || !isset($_SESSION['barbeiro_id'])) {
@@ -76,7 +77,7 @@ if ($barbeiro_id) {
     <ul>
         <li><a href="barbeiro.php">Agendamentos</a></li>
         <li><a href="clientes.php">Clientes</a></li>
-        <li><a href="configurar.php">Configurar Barbearia</a></li>
+        <li><a href="configuracoes.php">Configurar Barbearia</a></li>
         <li><a href="logout.php">Sair</a></li>
     </ul>
 </nav>

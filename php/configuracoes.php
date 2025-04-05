@@ -40,5 +40,25 @@ $barbeiro_id = $_SESSION['barbeiro_id'];
 
         <input type="submit" value="Salvar Configuração">
     </form>
+
+    <hr>
+
+    <?php
+    // Exibir datas que estão marcadas como fechadas
+    $stmt = $conn->prepare("SELECT data, motivo FROM configuracoes_barbeiro WHERE barbeiro_id = ? AND fechado = 1 ORDER BY data ASC");
+    $stmt->execute([$barbeiro_id]);
+    $datas_fechadas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    if ($datas_fechadas) {
+        echo "<h3>📅 Datas em que a barbearia estará fechada:</h3><ul>";
+        foreach ($datas_fechadas as $row) {
+            $motivo = $row['motivo'] ? " - Motivo: " . htmlspecialchars($row['motivo']) : "";
+            echo "<li><strong>" . $row['data'] . "</strong>$motivo</li>";
+        }
+        echo "</ul>";
+    } else {
+        echo "<p style='color: green;'>Nenhuma data marcada como fechada até agora.</p>";
+    }
+    ?>
 </body>
 </html>
