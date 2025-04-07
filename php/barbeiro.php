@@ -1,58 +1,37 @@
 <?php
 include "conexao.php";
-
 session_start();
 
 if (!isset($_SESSION['usuario_id']) || !isset($_SESSION['barbeiro_id'])) {
-    // Redireciona para a tela de login se não estiver logado
     header("Location: login.html");
     exit;
 }
 
-
 $barbeiro_id = $_SESSION['barbeiro_id'];
 
+// Permite filtrar por barbeiro via GET
+$barbeiro_id = isset($_GET['id']) ? $_GET['id'] : $barbeiro_id;
 
-
-// Verifica se um ID de barbeiro foi passado
-$barbeiro_id = isset($_GET['id']) ? $_GET['id'] : null;
-/*
-$data_inicio = isset($_GET['inicio']) ? $_GET['inicio'] : null;
-$data_fim = isset($_GET['fim']) ? $_GET['fim'] : null;
-*/
-
-
-// Obtém todos os barbeiros para exibir no filtro
+// Obtém todos os barbeiros
 $stmt = $conn->prepare("SELECT * FROM barbeiro");
 $stmt->execute();
 $barbeiros = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Se um barbeiro foi selecionado, mostra os agendamentos dele
+// Se um barbeiro foi selecionado, busca os agendamentos e ganhos
 if ($barbeiro_id) {
+    // Filtro de datas
+    $data_inicio = isset($_GET['inicio']) ? $_GET['inicio'] : date('Y-m-d');
+    $data_fim = isset($_GET['fim']) ? $_GET['fim'] : date('Y-m-d');
+
+    // Consulta de agendamentos
     $query = "SELECT a.id, c.nome AS cliente_nome, a.data, a.hora, s.nome AS servico, s.preco 
               FROM agendamento_novo a
               JOIN cliente c ON a.cliente_id = c.id
               JOIN servico s ON a.servico = s.id
               WHERE a.barbeiro_id = ?";
-              
-$data_inicio = isset($_GET['inicio']) ? $_GET['inicio'] : date('Y-m-d');
-$data_fim = isset($_GET['fim']) ? $_GET['fim'] : date('Y-m-d');
 
     $params = [$barbeiro_id];
 
-    
-    $query .= " ORDER BY a.data, a.hora";
-    $stmt = $conn->prepare($query);
-    $stmt->execute($params);
-    $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    // Recalcula os ganhos totais com base no mesmo filtro
-    $ganhosQuery = "SELECT SUM(s.preco) AS ganhos_totais
-                    FROM agendamento_novo a
-                    JOIN servico s ON a.servico = s.id
-                    WHERE a.barbeiro_id = ?";
-    $ganhosParams = [$barbeiro_id];
- 
     if ($data_inicio && $data_fim) {
         $query .= " AND a.data BETWEEN ? AND ?";
         $params[] = $data_inicio;
@@ -60,11 +39,12 @@ $data_fim = isset($_GET['fim']) ? $_GET['fim'] : date('Y-m-d');
     }
 
     $query .= " ORDER BY a.data, a.hora";
+
     $stmt = $conn->prepare($query);
     $stmt->execute($params);
     $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // Calcular os ganhos no mesmo período
+    // Consulta de ganhos totais
     $ganhosQuery = "SELECT SUM(s.preco) AS ganhos_totais
                     FROM agendamento_novo a
                     JOIN servico s ON a.servico = s.id
@@ -80,9 +60,9 @@ $data_fim = isset($_GET['fim']) ? $_GET['fim'] : date('Y-m-d');
     $stmt = $conn->prepare($ganhosQuery);
     $stmt->execute($ganhosParams);
     $ganhos = $stmt->fetch(PDO::FETCH_ASSOC);
-
     $ganhos_totais = $ganhos['ganhos_totais'] ?? 0;
 } else {
+    // Caso nenhum barbeiro seja selecionado
     $agendamentos = [];
     $ganhos_totais = 0;
 }

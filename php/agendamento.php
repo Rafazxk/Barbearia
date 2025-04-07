@@ -101,9 +101,12 @@ if ($barbeiro_id) {
                 <?php endif; ?>
             </select>
 
-            <label for="nome_cliente">Seu nome:</label>
-            <input type="text" name="nome_cliente" id="nome_cliente" required>
+            <label for="nome">Seu nome:</label>
+            <input type="text" name="nome" id="nome" required>
 
+            <label for="telefone">Telefone:</label>
+            <input type="text" name="telefone" id="telefone" required>
+             
             <button type="submit">Agendar</button>
         </form>
     <?php endif; ?>

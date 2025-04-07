@@ -3,13 +3,14 @@
 include "conexao.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_GET['id'])) {
+
    
-    $nome = $_POST["nome"];
-  // $telefone = $_POST["telefone"]; 
-    $barbeiro_id = $_POST["barbeiro_id"];
-    $data = $_POST["data"];
-    $hora = $_POST["hora"];
-    $servico = $_POST["servico"];
+    $data = $_POST['data'] ?? '';
+    $hora = $_POST['hora'] ?? '';
+    $nome = $_POST['nome'] ?? '';
+    $telefone = $_POST['telefone'] ?? '';
+    $servico = $_POST['servico_id'] ?? null;  
+    $barbeiro_id = $_POST['barbeiro_id'] ?? null;
 
     // Verifica cliente
     $stmt = $conn->prepare("SELECT id FROM cliente WHERE telefone = ?");
@@ -37,16 +38,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_GET['id'])) {
 // Exibe os dados do agendamento (se ID estiver definido)
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
-    $stmt = $conn->prepare("SELECT a.id, a.data, a.hora, s.nome AS servico, b.nome AS barbeiro
-                            FROM agendamento_novo a
-                            JOIN servico s ON a.servico = s.id
-                            JOIN barbeiro b ON a.barbeiro_id = b.id
-                            WHERE a.id = ?");
+    $stmt = $conn->prepare("SELECT a.id, a.data, a.hora, s.nome AS servico, b.nome AS barbeiro, c.nome AS cliente, c.telefone
+    FROM agendamento_novo a
+    JOIN servico s ON a.servico = s.id
+    JOIN barbeiro b ON a.barbeiro_id = b.id
+    JOIN cliente c ON a.cliente_id = c.id
+    WHERE a.id = ?");
+
     $stmt->execute([$id]);
     $agendamento = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($agendamento) {
         $agendamento_id = $agendamento['id'];
+        $nome = $agendamento['cliente'];
+        $telefone = $agendamento['telefone'];
         $data = $agendamento['data'];
         $hora = $agendamento['hora'];
         $servico = $agendamento['servico'];
@@ -55,7 +60,7 @@ if (isset($_GET['id'])) {
         echo "Agendamento não encontrado!";
         exit;
     }
-}
+  }
 ?>
 
  <!DOCTYPE html>
@@ -97,7 +102,8 @@ if (isset($_GET['id'])) {
         <body>
             <div class="card">
                 <h1>Agendamento Confirmado!</h1>
-                <p><strong>ID:</strong> <?= $agendamento_id ?></p>
+                <p><strong>Nome:</strong> <?= isset($nome) ? htmlspecialchars($nome) : 'Não informado' ?></p>
+                <p><strong>Telefone:</strong> <?= $telefone ?> </p>
                 <p><strong>Data:</strong> <?= date('d/m/Y', strtotime($data)) ?></p>
                 <p><strong>Hora:</strong> <?= $hora ?></p>
                 <p><strong>Serviço:</strong> <?= $servico ?></p>
