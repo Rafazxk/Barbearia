@@ -16,6 +16,11 @@ $barbeiro_id = $_SESSION['barbeiro_id'];
 
 // Verifica se um ID de barbeiro foi passado
 $barbeiro_id = isset($_GET['id']) ? $_GET['id'] : null;
+/*
+$data_inicio = isset($_GET['inicio']) ? $_GET['inicio'] : null;
+$data_fim = isset($_GET['fim']) ? $_GET['fim'] : null;
+*/
+
 
 // Obtém todos os barbeiros para exibir no filtro
 $stmt = $conn->prepare("SELECT * FROM barbeiro");
@@ -24,27 +29,63 @@ $barbeiros = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Se um barbeiro foi selecionado, mostra os agendamentos dele
 if ($barbeiro_id) {
-    $stmt = $conn->prepare("SELECT a.id, c.nome AS cliente_nome, a.data, a.hora, s.nome AS servico, s.preco 
-                            FROM agendamento_novo a
-                            JOIN cliente c ON a.cliente_id = c.id
-                            JOIN servico s ON a.servico = s.id
-                            WHERE a.barbeiro_id = ? ORDER BY a.data, a.hora");
-    $stmt->execute([$barbeiro_id]);
+    $query = "SELECT a.id, c.nome AS cliente_nome, a.data, a.hora, s.nome AS servico, s.preco 
+              FROM agendamento_novo a
+              JOIN cliente c ON a.cliente_id = c.id
+              JOIN servico s ON a.servico = s.id
+              WHERE a.barbeiro_id = ?";
+              
+$data_inicio = isset($_GET['inicio']) ? $_GET['inicio'] : date('Y-m-d');
+$data_fim = isset($_GET['fim']) ? $_GET['fim'] : date('Y-m-d');
+
+    $params = [$barbeiro_id];
+
+    
+    $query .= " ORDER BY a.data, a.hora";
+    $stmt = $conn->prepare($query);
+    $stmt->execute($params);
     $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // Calcula os ganhos totais do barbeiro
-    $stmt = $conn->prepare("SELECT SUM(s.preco) AS ganhos_totais
-                            FROM agendamento_novo a
-                            JOIN servico s ON a.servico = s.id
-                            WHERE a.barbeiro_id = ?");
-    $stmt->execute([$barbeiro_id]);
-    $ganhos_totais = $stmt->fetch(PDO::FETCH_ASSOC)['ganhos_totais'];
+    // Recalcula os ganhos totais com base no mesmo filtro
+    $ganhosQuery = "SELECT SUM(s.preco) AS ganhos_totais
+                    FROM agendamento_novo a
+                    JOIN servico s ON a.servico = s.id
+                    WHERE a.barbeiro_id = ?";
+    $ganhosParams = [$barbeiro_id];
+ 
+    if ($data_inicio && $data_fim) {
+        $query .= " AND a.data BETWEEN ? AND ?";
+        $params[] = $data_inicio;
+        $params[] = $data_fim;
+    }
+
+    $query .= " ORDER BY a.data, a.hora";
+    $stmt = $conn->prepare($query);
+    $stmt->execute($params);
+    $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Calcular os ganhos no mesmo período
+    $ganhosQuery = "SELECT SUM(s.preco) AS ganhos_totais
+                    FROM agendamento_novo a
+                    JOIN servico s ON a.servico = s.id
+                    WHERE a.barbeiro_id = ?";
+    $ganhosParams = [$barbeiro_id];
+
+    if ($data_inicio && $data_fim) {
+        $ganhosQuery .= " AND a.data BETWEEN ? AND ?";
+        $ganhosParams[] = $data_inicio;
+        $ganhosParams[] = $data_fim;
+    }
+
+    $stmt = $conn->prepare($ganhosQuery);
+    $stmt->execute($ganhosParams);
+    $ganhos = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $ganhos_totais = $ganhos['ganhos_totais'] ?? 0;
 } else {
-    // Se não for selecionado nenhum barbeiro, não exibe agendamentos
     $agendamentos = [];
     $ganhos_totais = 0;
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -56,9 +97,19 @@ if ($barbeiro_id) {
     <link rel="stylesheet" href="styles/barbeiro.css">
 </head>
 <body>
-    <h2>Agendamentos por Barbeiro</h2>
+<header>
+    <h1>Painel do Barbeiro</h1>
+    <nav>
+        <ul>
+            <li><a href="configuracoes.php?barbeiro_id=<?= $barbeiro_id ?>">Configurações da Barbearia</a></li>
+            <li><a href="logout.php">Sair</a></li>
+        </ul>
+    </nav>
+</header>
+
 
     <!-- Filtro de barbeiros -->
+    
     <form method="get" action="barbeiro.php">
         <label for="barbeiro">Escolha o Barbeiro:</label>
         <select name="id" id="barbeiro">
@@ -74,6 +125,19 @@ if ($barbeiro_id) {
 
     <?php if ($barbeiro_id): ?>
         <h3>Ganhos Totais: R$ <?= number_format($ganhos_totais, 2, ',', '.') ?></h3>
+
+<h3>Filtrar por data</h3>
+<form method="GET">
+    <input type="hidden" name="id" value="<?= htmlspecialchars($barbeiro_id) ?>">
+    <label for="inicio">Início:</label>
+    <input type="date" name="inicio" id="inicio" value="<?= htmlspecialchars($data_inicio) ?>">
+    
+    <label for="fim">Fim:</label>
+    <input type="date" name="fim" id="fim" value="<?= htmlspecialchars($data_fim) ?>">
+    
+    <button type="submit">Filtrar</button>
+</form>
+
 
         <!-- Tabela de agendamentos -->
         <table>
@@ -109,5 +173,5 @@ if ($barbeiro_id) {
             </tbody>
         </table>
     <?php endif; ?>
-</body>
+</b>
 </html>

@@ -1,31 +1,45 @@
 <?php
 include_once "conexao.php";
+include_once "funcoes.php";
 
-// Definir horários
-$horarios_disponiveis = [
-    "08:00", "09:00", "10:00", "11:00", "12:00",
-    "13:00", "14:00", "15:00", "16:00", "17:00",
-    "18:00", "19:00", "20:00"
-];
+// Buscar barbeiros
+$stmt = $conn->query("SELECT id, nome FROM barbeiro");
+$barbeiros = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Recupera os serviços disponíveis no banco
-$stmt = $conn->prepare("SELECT id, nome, preco FROM servico");
-$stmt->execute();
+// Buscar serviços
+$stmt = $conn->query("SELECT id, nome, preco FROM servico");
 $servicos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Pegar o barbeiro da URL ou do formulário
+// Pega parâmetros
 $barbeiro_id = $_GET["barbeiro_id"] ?? null;
 $data_selecionada = $_GET["data"] ?? date("Y-m-d");
 
-// Se um barbeiro foi escolhido, buscar horários ocupados
-$horarios_ocupados = [];
+// Verificar se o barbeiro estará indisponível na data escolhida
+$verifica = $conn->prepare("SELECT * FROM configuracoes_barbeiro 
+                            WHERE barbeiro_id = ? AND data = ? 
+                            AND (fechado = 1 OR abrir = 0)");
+$verifica->execute([$barbeiro_id, $data_selecionada]);
 
+
+$config = $verifica->fetch();
+
+if ($config) {
+    echo "<p style='color:red;'>Esse barbeiro estará indisponível nessa data. Escolha outra.</p>";
+    exit;
+}
+
+
+
+
+// Define horários com base nas configurações do barbeiro
+$horarios_disponiveis = [];
 if ($barbeiro_id) {
+    $horarios_disponiveis = horariosConfigurados($conn, $barbeiro_id, $data_selecionada);
+
+    // Remove horários já agendados
     $stmt = $conn->prepare("SELECT hora FROM agendamento_novo WHERE data = ? AND barbeiro_id = ?");
     $stmt->execute([$data_selecionada, $barbeiro_id]);
     $horarios_ocupados = $stmt->fetchAll(PDO::FETCH_COLUMN);
-
-    // Filtrar horários disponíveis
     $horarios_disponiveis = array_values(array_diff($horarios_disponiveis, $horarios_ocupados));
 }
 ?>
@@ -34,119 +48,64 @@ if ($barbeiro_id) {
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agendamento</title>
     <link rel="stylesheet" href="../styles/agendamento.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
-  
-    
-<body>  
-<header class="hero">
-       <a href="../index.html" id="voltar">voltar</a>
-       <img src="../imagens/tk_logo.png" id="logo_name">
-        <nav>
-            <a href="index.html" id="btn_home">Home</a>
-            <a href="index.html" id="btn_servicos">Serviços</a>            
-            <a href="index.html" id="btn_contato">Contato</a>
-        </nav>       
-    </header>
+<body>
+  <header>
+    <h1>Agende seu horário</h1>
+    <nav>
+      <a href="#">Inicio</a>
+    </nav>  
+</header>
 
-  <main class="main">
-    <h2>Agendamento de Serviço</h2>
-<div class="escolha-barbeiro">
-    <form action="" method="GET">
-        <label for="barbeiro">Escolha o Barbeiro:</label>
-        <select name="barbeiro_id" id="barbeiro" required onchange="this.form
-         .submit()">
-            <option value="">Selecione um barbeiro</option>
-            <option value="1" <?= $barbeiro_id == 1 ? 'selected' : '' ?>>Tharsys</option>
-            <option value="2" <?= $barbeiro_id == 2 ? 'selected' : '' ?>>Kleyton</option>
-            <option value="3" <?= $barbeiro_id == 3 ? 'selected' : '' ?>>Gustavo</option>
+
+
+    <form method="GET" action="">
+        <label for="barbeiro">Escolha o barbeiro:</label>
+        <select name="barbeiro_id" id="barbeiro" required onchange="this.form.submit()">
+            <option value="">Selecione...</option>
+            <?php foreach ($barbeiros as $b): ?>
+                <option value="<?= $b['id'] ?>" <?= $barbeiro_id == $b['id'] ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($b['nome']) ?>
+                </option>
+            <?php endforeach; ?>
         </select>
+
+        <label for="data">Data:</label>
+        <input type="date" name="data" id="data" value="<?= $data_selecionada ?>" onchange="this.form.submit()">
     </form>
-</div>
 
-<?php if ($barbeiro_id): ?>
-     
-   <div class="agendamento">
-        
-        <form action="concluido.php" method="POST">
+    <?php if ($barbeiro_id): ?>
+        <form method="POST" action="concluido.php">
             <input type="hidden" name="barbeiro_id" value="<?= $barbeiro_id ?>">
+            <input type="hidden" name="data" value="<?= $data_selecionada ?>">
 
-            <br>
-      <div class="data">
-            <label for="data">Escolha a Data:</label>
-            <input type="date" name="data" id="data" value="<?= htmlspecialchars($data_selecionada) ?>" required onchange="updateURL()">
-      </div>
-            <br><br>
-      <div class="hora">
-            <label for="hora">Escolha o Horário:</label>
+            <label for="servico">Serviço:</label>
+            <select name="servico_id" id="servico" required>
+                <?php foreach ($servicos as $s): ?>
+                    <option value="<?= $s['id'] ?>">
+                        <?= htmlspecialchars($s['nome']) ?> - R$ <?= number_format($s['preco'], 2, ',', '.') ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+
+            <label for="hora">Horário:</label>
             <select name="hora" id="hora" required>
                 <?php if (empty($horarios_disponiveis)): ?>
                     <option value="">Nenhum horário disponível</option>
                 <?php else: ?>
-                    <?php foreach ($horarios_disponiveis as $hora): ?>
-                        <option value="<?= $hora ?>"><?= $hora ?></option>
+                    <?php foreach ($horarios_disponiveis as $h): ?>
+                        <option value="<?= $h ?>"><?= $h ?></option>
                     <?php endforeach; ?>
                 <?php endif; ?>
             </select>
-      </div>
-            <br><br>
-      <div class="servicos">
-            <label for="servico">Escolha o Serviço:</label>
-            <select name="servico" id="servico" required>
-                <?php foreach ($servicos as $servico): ?>
-                    <option value="<?= $servico['id']; ?>">
-                        <?= $servico['nome']; ?> - R$ <?= number_format($servico['preco'], 2, ',', '.'); ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-   </div> 
-            <br><br>
-    <div class="dados-cliente">
-        <h2>Insira seus Dados</h2>
-      
-      <div class="dados">
-            <label for="nome">Nome:</label>
-            <input type="text" name="nome" id="nome" placeholder ="Insira seu nome" required>
-            <br><br>
 
-            <label for="telefone">Telefone:</label>
-            <input type="text" name="telefone" id="telefone" placeholder ="Insira seu telefone" required oninput="formatarTelefone(this)" required>
-            <br><br>
-       </div>
+            <label for="nome_cliente">Seu nome:</label>
+            <input type="text" name="nome_cliente" id="nome_cliente" required>
+
             <button type="submit">Agendar</button>
-         </form>
-       </div>
-       
+        </form>
     <?php endif; ?>
-    
-  </main>
-  
-    <script>
-        function updateURL() {
-            const data = document.getElementById('data').value;
-            const url = new URL(window.location.href);
-            url.searchParams.set('data', data);
-            window.location.href = url.toString();
-        }
-function formatarTelefone(input) {
-    let telefone = input.value.replace(/\D/g, '');
-    
-
-    if (telefone.length > 11) telefone = telefone.slice(0, 11); // Limita ate 11 dígitos
-
-    if (telefone.length > 10) {
-        input.value = `(${telefone.slice(0, 2)}) ${telefone.slice(2, 7)}-${telefone.slice(7)}`;
-    } else if (telefone.length > 6) {
-        input.value = `(${telefone.slice(0, 2)}) ${telefone.slice(2, 6)}-${telefone.slice(6)}`;
-    } else if (telefone.length > 2) {
-        input.value = `(${telefone.slice(0, 2)}) ${telefone.slice(2)}`;
-    } else if (telefone.length > 0) {
-        input.value = `(${telefone}`;
-    }
-}
-    </script>
 </body>
 </html>

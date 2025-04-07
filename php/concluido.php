@@ -3,9 +3,9 @@
 include "conexao.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_GET['id'])) {
-    // Lógica de novo agendamento
+   
     $nome = $_POST["nome"];
-    $telefone = $_POST["telefone"];
+  // $telefone = $_POST["telefone"]; 
     $barbeiro_id = $_POST["barbeiro_id"];
     $data = $_POST["data"];
     $hora = $_POST["hora"];
@@ -57,64 +57,54 @@ if (isset($_GET['id'])) {
     }
 }
 ?>
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Agendamento</title>
-  <link rel="stylesheet" href="../styles/concluido.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-</head>
-<body>
-<script>
-  if (Notification.permission === "granted") {
-    new Notification("Novo agendamento recebido!", {
-      body: "Um cliente acabou de agendar um horário.",
-      icon: "../imagens/tk_logo.png" // opcional
-    });
-  }
-</script>
-  <header class="hero">
-    <a href="agendamento.php" id="voltar">< Voltar</a>
-    <img src="../imagens/tk_logo.png" id="logo_name">
-    <nav>
-      <a href="index.html" id="btn_home">Home</a>
-      <a href="index.html" id="btn_servicos">Serviços</a>
-      <a href="index.html" id="btn_contato">Contato</a>
-    </nav>
-  </header>
 
-  <main class="main">
-    <div class="tela_dados">
-      <h2 id="concluido">Agendamento Concluído com sucesso!</h2>
+ <!DOCTYPE html>
+        <html lang="pt-br">
+        <head>
+            <meta charset="UTF-8">
+            <title>Agendamento Concluído</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    background-color: #f5f5f5;
+                    padding: 20px;
+                    text-align: center;
+                }
+                .card {
+                    background-color: white;
+                    padding: 20px;
+                    border-radius: 8px;
+                    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                    display: inline-block;
+                }
+                h1 {
+                    color: #27ae60;
+                }
+                p {
+                    margin: 8px 0;
+                }
+                a {
+                    display: inline-block;
+                    margin-top: 20px;
+                    padding: 10px 20px;
+                    background-color: #3498db;
+                    color: white;
+                    text-decoration: none;
+                    border-radius: 4px;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="card">
+                <h1>Agendamento Confirmado!</h1>
+                <p><strong>ID:</strong> <?= $agendamento_id ?></p>
+                <p><strong>Data:</strong> <?= date('d/m/Y', strtotime($data)) ?></p>
+                <p><strong>Hora:</strong> <?= $hora ?></p>
+                <p><strong>Serviço:</strong> <?= $servico ?></p>
+                <p><strong>Barbeiro:</strong> <?= $barbeiro ?></p>
+                <a href="agendamento.php">Voltar para Agendamento</a>
+            </div>
+        </body>
+        </html>
 
-      <p>Data: <?= htmlspecialchars($data) ?></p>
-      <p>Hora: <?= htmlspecialchars($hora) ?></p>
-      <p>Serviço: <?= htmlspecialchars($servico) ?></p>
-      <p>Barbeiro: <?= htmlspecialchars($barbeiro) ?></p>
-
-      <div class="acoes">
-        <a href="editar_agendamento.php?id=<?= $agendamento_id ?>">
-          <button>Alterar</button>
-        </a>
-        <a href="excluir_agendamento.php?id=<?= $agendamento_id ?>" onclick="return confirm('Deseja realmente excluir este agendamento?');">
-          <button>Excluir</button>
-        </a>
-      </div>
-    </div>
-  </main>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    if ("Notification" in window) {
-      if (Notification.permission !== "granted") {
-        Notification.requestPermission();
-      }
-    }
-  });
-</script>
-
-
-</body>
-</html>
+   

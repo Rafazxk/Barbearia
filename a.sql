@@ -1,0 +1,1 @@
+CREATE TABLE configuracoes_barbeiro (    id INTEGER PRIMARY KEY AUTOINCREMENT,    barbeiro_id INTEGER,    data DATE,    abrir INTEGER DEFAULT 1,    horario_abertura TIME,    horario_fechamento TIME,    motivo TEXT,    FOREIGN KEY (barbeiro_id) REFERENCES barbeiro(id));
