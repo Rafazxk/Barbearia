@@ -2,29 +2,199 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
 }
+#logo_name{
+  width: 100px;
+  margin-right: 45px;
+}
+
 h1{
+  margin-top: 50px;
   color: white;
+  border-bottom: 2px solid white;
 }
 body{
+  background: #333;
   text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 header{
   background: #111;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   height: 30vh;
-  
+  width: 100%;
+}
+header nav{
+   margin-top: 50px;
+
 }
 header nav a {
+  padding: 15px;
+  border-radius: 15px;
   text-decoration: none;
   color: gold;
-  font-size:50px;
+  font-size:25px;
+  transition: 0.5s;
+}
+header nav a:hover{
+  color: white;
+  background: gold;
+}
+.principal{
+  width: 70%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+}
+.principal form{
+  width: 100%;
+  
+}
+.escolha_barbeiro{
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(255, 215, 0, 0.5);
+  width: 100%;
+  padding: 40px;
+  background: #111;
+  color: white;
+  border-radius: 14px;
+  gap: 30px;
 }
 
+.escolha_barbeiro .barbeiro{
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+  width: 100%;
+  gap: 10px;
+}
+
+.escolha_barbeiro .data{
+  width: 100%;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.escolha_barbeiro .barbeiro select{
+  padding: 10px;
+  width: 100%;
+  font-size: 20px;
+  font-weight: 700;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.escolha_barbeiro .data input{
+  padding: 10px; 
+  font-size: 20px;
+  font-weight: 700;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.servico{
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(255, 215, 0, 0.5);
+  width: 100%;
+  padding: 40px;
+  background: #111;
+  color: white;
+  border-radius: 14px;
+  gap: 30px;
+}
+.servico select{
+  padding: 10px; 
+  font-size: 20px;
+  width: 100%;
+  font-weight: 700;
+  border-radius: 10px;
+  text-align: center;
+}
+
+
+.hora_agendamento{
+  margin-top: 50px;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(255, 215, 0, 0.5);
+  width: 100%;
+  padding: 40px;
+  background: #111;
+  color: white;
+  border-radius: 14px;
+  gap: 30px;
+}
+.hora_agendamento select{
+  padding: 10px; 
+  font-size: 20px;
+  width: 100%;
+  font-weight: 700;
+  border-radius: 10px;
+  text-align: center;
+}
+
+
+.informacoes_cliente{
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(255, 215, 0, 0.5);
+  width: 100%;
+  padding: 40px;
+  background: #111;
+  color: white;
+  border-radius: 14px;
+  gap: 30px;
+  font-size: 20px;
+}
+.informacoes_cliente input{
+  padding: 10px; 
+  font-size: 20px;
+  width: 100%;
+  font-weight: 700;
+  border-radius: 10px;
+  text-align: center;
+}
+button{
+  padding: 15px;
+  border-radius: 10px;
+  color: black;
+  font-weight: 900;
+  font-size: 20px;
+  cursor: pointer;
+  background-color: gold;
+  border: none;
+  transition: 0.4s;
+}
+button:hover{
+  color: white;
+  transform: scale(1.2);
+}
 
 
 @media(max-width: 768px) {

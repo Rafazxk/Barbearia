@@ -28,9 +28,6 @@ if ($config) {
     exit;
 }
 
-
-
-
 // Define horários com base nas configurações do barbeiro
 $horarios_disponiveis = [];
 if ($barbeiro_id) {
@@ -50,37 +47,48 @@ if ($barbeiro_id) {
     <meta charset="UTF-8">
     <title>Agendamento</title>
     <link rel="stylesheet" href="../styles/agendamento.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
   <header>
-    <h1>Agende seu horário</h1>
-    <nav>
-      <a href="#">Inicio</a>
-    </nav>  
-</header>
+  <img src="../imagens/tk_logo.png" id="logo_name">
+       <nav>
+        <a href="#">Inicio</a>
+       </nav>  
+  </header>
 
+<main class="principal">
+   <h1>Escolha seu Agendamento</h1>
+  <!-- escolha do barbeiro -->
 
-
+  
     <form method="GET" action="">
+    <div class="escolha_barbeiro">
+     <div class="barbeiro">
         <label for="barbeiro">Escolha o barbeiro:</label>
-        <select name="barbeiro_id" id="barbeiro" required onchange="this.form.submit()">
+         <select name="barbeiro_id" id="barbeiro" required onchange="this.form.submit()">
             <option value="">Selecione...</option>
-            <?php foreach ($barbeiros as $b): ?>
+              <?php foreach ($barbeiros as $b): ?>
                 <option value="<?= $b['id'] ?>" <?= $barbeiro_id == $b['id'] ? 'selected' : '' ?>>
                     <?= htmlspecialchars($b['nome']) ?>
                 </option>
             <?php endforeach; ?>
         </select>
+     </div>
 
+  <div class="data">
         <label for="data">Data:</label>
         <input type="date" name="data" id="data" value="<?= $data_selecionada ?>" onchange="this.form.submit()">
+  </div>     
     </form>
+  </div>
 
     <?php if ($barbeiro_id): ?>
-        <form method="POST" action="concluido.php">
+       
+        <form method="POST" action="concluido.php" id="form">
             <input type="hidden" name="barbeiro_id" value="<?= $barbeiro_id ?>">
             <input type="hidden" name="data" value="<?= $data_selecionada ?>">
-
+ <div class="servico">
             <label for="servico">Serviço:</label>
             <select name="servico_id" id="servico" required>
                 <?php foreach ($servicos as $s): ?>
@@ -89,7 +97,9 @@ if ($barbeiro_id) {
                     </option>
                 <?php endforeach; ?>
             </select>
+ </div>
 
+  <div class="hora_agendamento">
             <label for="hora">Horário:</label>
             <select name="hora" id="hora" required>
                 <?php if (empty($horarios_disponiveis)): ?>
@@ -100,15 +110,37 @@ if ($barbeiro_id) {
                     <?php endforeach; ?>
                 <?php endif; ?>
             </select>
-
+ </div>
+ <div class="informacoes_cliente">
             <label for="nome">Seu nome:</label>
-            <input type="text" name="nome" id="nome" required>
+            <input type="text" name="nome" id="nome" placeholder="Insira seu nome aqui" required>
 
             <label for="telefone">Telefone:</label>
-            <input type="text" name="telefone" id="telefone" required>
+            <input type="text" name="telefone" id="telefone" placeholder="Insira seu Telefone aqui" required>
              
             <button type="submit">Agendar</button>
+        
+</div>
         </form>
+
     <?php endif; ?>
+
+   </main>
+
+   <script>
+document.getElementById('telefone').addEventListener('input', function (e) {
+    let valor = e.target.value.replace(/\D/g, ''); // remove tudo que não é número
+
+    if (valor.length > 11) valor = valor.slice(0, 11); // limita a 11 dígitos
+
+    if (valor.length <= 10) {
+        valor = valor.replace(/(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
+    } else {
+        valor = valor.replace(/(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
+    }
+
+    e.target.value = valor;
+});
+</script>
 </body>
 </html>

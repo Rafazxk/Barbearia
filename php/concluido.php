@@ -68,36 +68,8 @@ if (isset($_GET['id'])) {
         <head>
             <meta charset="UTF-8">
             <title>Agendamento Concluído</title>
-            <style>
-                body {
-                    font-family: Arial, sans-serif;
-                    background-color: #f5f5f5;
-                    padding: 20px;
-                    text-align: center;
-                }
-                .card {
-                    background-color: white;
-                    padding: 20px;
-                    border-radius: 8px;
-                    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-                    display: inline-block;
-                }
-                h1 {
-                    color: #27ae60;
-                }
-                p {
-                    margin: 8px 0;
-                }
-                a {
-                    display: inline-block;
-                    margin-top: 20px;
-                    padding: 10px 20px;
-                    background-color: #3498db;
-                    color: white;
-                    text-decoration: none;
-                    border-radius: 4px;
-                }
-            </style>
+            <link rel="stylesheet" href="../styles/concluido.css">
+            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
         </head>
         <body>
             <div class="card">
