@@ -1,0 +1,158 @@
+*{
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+body {
+    gap: 20px;
+    background-color: #111;
+    
+}
+h1{
+  color: white;
+  margin-top: 10px;
+}
+header{
+  padding: 40px;
+  background: #333;
+  height: 20vh; 
+  border-bottom: 2px solid white;
+}
+header nav{
+  gap: 50px;
+  margin-top: 15px;
+  bottom: 50px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#sair{
+  background: gold;
+  padding: 10px;
+  border-radius: 10px;
+  color: black;
+  font-weight: 600;
+}
+a {
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+table {
+  margin-top: 50px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid gold;
+    padding: 8px;
+    text-align: left;
+    color: white;
+  
+}
+
+th {
+    background-color: #222;
+}
+
+tr:nth-child(even) {
+    background-color: #333;
+}
+
+tr:nth-child(odd) {
+    background-color: #222;
+}
+
+input[type="submit"], button {
+    background-color: gold;
+    color: #111;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover, button:hover {
+    background-color: #daa520;
+}
+
+input[type="text"], input[type="date"] {
+    background-color: #333;
+    color: gold;
+    border: 1px solid gold;
+    padding: 5px;
+}
+
+select {
+    background-color: #333;
+    color: gold;
+    border: 1px solid gold;
+    padding: 5px;
+}
+
+ h2, h3 {
+    color: gold;
+}
+.escolha{
+  color: white;
+  margin: 0 auto;
+  margin-top: 20px;
+  background: #333;
+  padding: 40px;
+  border-radius: 10px;
+  width: 80%;
+
+}
+.escolha select{
+  width: 80%;
+  padding: 20px;
+}
+.escolha button{
+  font-weight: 600;
+  margin: 0 auto;
+  margin-top: 20px;
+  border-radius: 10px;
+  width: 60%;
+}
+
+.inicio{
+color: white;
+margin-right: 20px;
+}
+.inicio input{
+  padding: 15px;
+}
+.fim input{
+  padding: 15px;
+}
+.fim{
+  margin-right: 8px;
+  margin-top: 5px;
+ color: white;
+}
+
+.ganhos{
+  gap: 30px;
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+  background: #333;
+   width: 80%;
+   margin: 0 auto;
+   margin-top: 40px;
+}
+.ganhos button{
+  margin-top: 20px;
+  width: 60%;
+  font-weight: 600;
+  border-radius: 10px;
+}
+#tk{
+  color:gold;
+}

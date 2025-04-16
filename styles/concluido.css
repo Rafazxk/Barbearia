@@ -39,3 +39,43 @@ a:hover{
   color: white;
   transform: scale(1.1);
 }
+.compartilhar{
+  background: #111;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 0px 10px rgba(255, 215, 0, 0.5);
+  padding: 15px;
+  margin-top: 40px;
+}
+.compartilhar button{
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background: gold;
+  font-weight: 700;
+  transition: 0.3s;
+  color: black;
+  cursor: pointer;
+}
+.compartilhar button:hover{
+  color: white;
+  transform: scale(1.1);
+}
+.icones{
+padding: 15px;
+  display: flex;
+  gap: 40px;
+}
+.icones img{
+  width: 70px;
+  cursor: pointer; 
+  transition: 0.4s;
+  
+}
+.icones img:hover{
+  transform: scale(1.2);
+ 
+}

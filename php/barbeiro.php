@@ -9,15 +9,15 @@ if (!isset($_SESSION['usuario_id']) || !isset($_SESSION['barbeiro_id'])) {
 
 $barbeiro_id = $_SESSION['barbeiro_id'];
 
-// Permite filtrar por barbeiro via GET
+// escolher barbeiro via get
 $barbeiro_id = isset($_GET['id']) ? $_GET['id'] : $barbeiro_id;
 
-// Obtém todos os barbeiros
+// puxa todos os barbeiros
 $stmt = $conn->prepare("SELECT * FROM barbeiro");
 $stmt->execute();
 $barbeiros = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Se um barbeiro foi selecionado, busca os agendamentos e ganhos
+//  busca os agendamentos e ganhos
 if ($barbeiro_id) {
     // Filtro de datas
     $data_inicio = isset($_GET['inicio']) ? $_GET['inicio'] : date('Y-m-d');
@@ -72,24 +72,29 @@ if ($barbeiro_id) {
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agendamentos por Barbeiro</title>
-    <link rel="stylesheet" href="styles/barbeiro.css">
+    <link rel="stylesheet" href="../styles/barbeiro.css">
+    
+    <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+    rel="stylesheet">
 </head>
 <body>
 <header>
-    <h1>Painel do Barbeiro</h1>
+    <h1>Painel <span id="tk">TK</span></h1>
     <nav>
-        <ul>
-            <li><a href="configuracoes.php?barbeiro_id=<?= $barbeiro_id ?>">Configurações da Barbearia</a></li>
-            <li><a href="logout.php">Sair</a></li>
-        </ul>
+
+    <a href="configuracoes.php?barbeiro_id=<?= $barbeiro_id
+            ?>">Configurações</a>
+      <a href="logout.php" id="sair">Sair</a>
+        
     </nav>
 </header>
 
 
     <!-- Filtro de barbeiros -->
-    
+<div class="escolha">
     <form method="get" action="barbeiro.php">
         <label for="barbeiro">Escolha o Barbeiro:</label>
         <select name="id" id="barbeiro">
@@ -102,23 +107,29 @@ if ($barbeiro_id) {
         </select>
         <button type="submit">Filtrar</button>
     </form>
-
+</div>
+<div class="ganhos">
     <?php if ($barbeiro_id): ?>
         <h3>Ganhos Totais: R$ <?= number_format($ganhos_totais, 2, ',', '.') ?></h3>
 
+<section class="data">
+  
 <h3>Filtrar por data</h3>
 <form method="GET">
+  <div class="inicio">
     <input type="hidden" name="id" value="<?= htmlspecialchars($barbeiro_id) ?>">
     <label for="inicio">Início:</label>
     <input type="date" name="inicio" id="inicio" value="<?= htmlspecialchars($data_inicio) ?>">
     
+  </div>
+  <div class="fim">
     <label for="fim">Fim:</label>
     <input type="date" name="fim" id="fim" value="<?= htmlspecialchars($data_fim) ?>">
-    
+    </div>
     <button type="submit">Filtrar</button>
 </form>
-
-
+</section>
+</div>
         <!-- Tabela de agendamentos -->
         <table>
             <thead>
@@ -144,7 +155,7 @@ if ($barbeiro_id) {
                             <td>R$ <?= number_format($agendamento['preco'], 2, ',', '.') ?></td>
                             <td>
                                 <!-- Botões de Alterar e Excluir -->
-                                <a href="edit_agendamento.php?id=<?= $agendamento['id'] ?>">Alterar</a> |
+                                <a href="editar_agendamento.php?id=<?= $agendamento['id'] ?>">Alterar</a> |
                                 <a href="excluir_agendamento.php?id=<?= $agendamento['id'] ?>" onclick="return confirm('Tem certeza que deseja excluir este agendamento?')">Excluir</a>
                             </td>
                         </tr>

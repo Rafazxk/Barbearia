@@ -2,8 +2,9 @@
 
 include "conexao.php";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_GET['id'])) {
 
+if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_GET['id'])) {
+ 
    
     $data = $_POST['data'] ?? '';
     $hora = $_POST['hora'] ?? '';
@@ -67,12 +68,15 @@ if (isset($_GET['id'])) {
         <html lang="pt-br">
         <head>
             <meta charset="UTF-8">
+             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Agendamento Concluído</title>
             <link rel="stylesheet" href="../styles/concluido.css">
             <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+      
         </head>
         <body>
-            <div class="card">
+            <div class="card" id="comprovante">
                 <h1>Agendamento Confirmado!</h1>
                 <p><strong>Nome:</strong> <?= isset($nome) ? htmlspecialchars($nome) : 'Não informado' ?></p>
                 <p><strong>Telefone:</strong> <?= $telefone ?> </p>
@@ -80,8 +84,57 @@ if (isset($_GET['id'])) {
                 <p><strong>Hora:</strong> <?= $hora ?></p>
                 <p><strong>Serviço:</strong> <?= $servico ?></p>
                 <p><strong>Barbeiro:</strong> <?= $barbeiro ?></p>
-                <a href="agendamento.php">Voltar para Agendamento</a>
+                
+  <div class="alteracao">
+                     <a href="editar_agendamento.php?id=<?= $agendamento['id'] ?>">Alterar</a>
+    
+    <a href="excluir.php">Excluir Agendamento </a>
+  </div>
             </div>
+            
+<div class="compartilhar">
+  <h2>Compartilhe seu Agendamento</h2>
+  
+  <div class="icones">
+  
+ <button onclick="compartilharImagem()">Compartilhar</button>
+  
+  </div>
+  <button onclick="baixarImagem()">Clique para baixar</button>
+</div>
+<script>
+  function baixarImagem() {
+  html2canvas(document.getElementById("comprovante")).then(canvas => {
+    const link = document.createElement("a");
+    link.href = canvas.toDataURL("image/png");
+    link.download = "comprovante-agendamento.png";
+    link.click();
+  });
+}
+
+async function compartilharImagem() {
+  const element = document.getElementById("comprovante");
+
+  const canvas = await html2canvas(element);
+  const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+  const file = new File([blob], "comprovante.png", { type: "image/png" });
+
+  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    try {
+      await navigator.share({
+        title: "Comprovante de agendamento",
+        text: "Segue o comprovante do agendamento:",
+        files: [file],
+      });
+    } catch (err) {
+      alert("Erro ao compartilhar: " + err);
+    }
+  } else {
+    alert("Seu navegador não suporta compartilhamento de arquivos.");
+  }
+}
+
+ </script>
         </body>
         </html>
 

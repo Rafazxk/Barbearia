@@ -45,15 +45,17 @@ if ($barbeiro_id) {
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agendamento</title>
     <link rel="stylesheet" href="../styles/agendamento.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
   <header>
+    <a class="voltar" href="../index.html">Voltar</a>
   <img src="../imagens/tk_logo.png" id="logo_name">
        <nav>
-        <a href="#">Inicio</a>
+        <a href="../index.html">Inicio</a>
        </nav>  
   </header>
 

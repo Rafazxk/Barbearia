@@ -136,8 +136,8 @@
   
   
   .cards-container {
-      overflow-x: auto;
-      white-space: nowrap;
+    display: flex;
+    flex-direction: column;
       padding: 10px 0;
   }
   
@@ -151,7 +151,7 @@
   
   .card-container {
       background: #2a2a2a;
-      padding: 15px;
+      padding: 10px;
       border-radius: 12px;
       box-shadow: 0 4px 8px rgba(255, 215, 0, 0.5);
       flex: 0 0 150px; 
@@ -160,24 +160,24 @@
   }
   
   .card {
-      width: 100%; 
-      height: 120px; 
+      width: 90%; 
+      height: 70px; 
       display: flex;
       align-items: center;
       justify-content: center;
       background: #fff;
       border-radius: 10px;
-      overflow: hidden;
+      
   }
  
   .card img {
-      width: 80px; 
-      height: 80px; 
-      object-fit: contain; 
+      width: 60px; 
+      height: 60px; 
+      
   }
   
   .card-name {
-      font-size: 18px;
+      font-size: 15px;
       margin-top: 10px;
       color: #fff;
   }
@@ -237,25 +237,7 @@
          bottom: 20px;
     }
 
-    .cards-container {
-         overflow-x: auto;
-         display: flex;
-         justify-content: center;
-    }
-
-    .cards {
-         flex-wrap: nowrap; 
-         gap: 10px;
-    }
-
-    .card-container {
-         flex: 0 0 130px; 
-    }
-
-    .card img {
-         width: 60px;
-        height: 60px;
-    }
+    
     #contato { 
          border-top: 1px solid white;
          display: flex;
@@ -270,23 +252,29 @@
          align-items: center;
          justify-content: center;
          display: flex;
-         gap: 50px;
-         padding: 15px;
+         gap: 60px;
+         padding: 20px;
          width: 70%;
          border-radius: 10px;
          box-shadow: 0 8px 20px rgba(255, 215, 0, 0.5);
         }
         .contato_um a img{
-          width: 45px;
+          width: 40px;
          } 
          .contato_um p{
           margin-top: 10px;
+          font-weight: 800;
+           color: gold;
+           
          }
+        
          .contato_dois p{
           margin-top: 10px;
+          font-weight: 800;
+           color: gold;
          }
          .contato_dois img{
-          width: 30px;
+          width: 35px;
          }
          .local{
           margin-top: 60px;
@@ -294,6 +282,68 @@
          .local img{
           width: 300px;
          }    
+  #servicos{
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+      margin-top: 5px;
+      background: #111;
+     
+      height: 130vh;
+      text-align: center;
+
+  }       
+  /*serviços*/
+  .cards-container {
+    display: flex;
+    flex-direction: column;
+      padding: 10px 0;
+  }
+  
+  .cards {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding: 10px;
+      cursor: grab;
+  }
+  
+  
+  .card-container {
+      background: #2a2a2a;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(255, 215, 0, 0.5);
+      flex: 0 0 150px; 
+      text-align: center;
+      transition: 0.3s;
+  }
+  
+  .card {
+      width: 100%; 
+      height: 80px; 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      border-radius: 10px;
+      
+  }
+ 
+  .card img {
+      width: 80px; 
+      height: 80px; 
+      
+  }
+  
+  .card-name {
+      font-size: 15px;
+      margin-top: 10px;
+      color: #fff;
+  }
+  
 }  
 #contato { 
     border-top: 1px solid white;

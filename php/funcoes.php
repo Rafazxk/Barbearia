@@ -8,7 +8,7 @@ function horariosPadrao() {
 function horariosConfigurados($conn, $barbeiro_id, $data) {
     $dia_semana = date("N", strtotime($data)); // 1 = segunda, ..., 7 = domingo
 
-    // Segunda-feira fechada por padrão
+    // Segunda-feira fechado
     if ($dia_semana == 1) return [];
 
     $stmt = $conn->prepare("SELECT abrir, horario_abertura, horario_fechamento FROM configuracoes_barbeiro WHERE barbeiro_id = ? AND data = ?");
@@ -20,6 +20,6 @@ function horariosConfigurados($conn, $barbeiro_id, $data) {
         return array_filter(horariosPadrao(), fn($h) => $h >= $config["horario_abertura"] && $h <= $config["horario_fechamento"]);
     }
 
-    // Sem config = segue padrão
+    // segue padrão
     return horariosPadrao();
 }
