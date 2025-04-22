@@ -6,15 +6,13 @@ include "conexao.php";
 if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_GET['id'])) {
  
   
-    $data = $_POST['data'] ?? '';
+    $data = $_POST['data'] ?? ($_GET['data'] ?? '');
     $hora = $_POST['hora'] ?? '';
     $nome = $_POST['nome'] ?? '';
     $telefone = $_POST['telefone'] ?? '';
     $servico = $_POST['servico_id'] ?? null;  
     $barbeiro_id = $_POST['barbeiro_id'] ?? null;
-    $data = $_GET['data'] ?? null;
-     
-    // Verifica cliente
+    
     $stmt = $conn->prepare("SELECT id FROM cliente WHERE telefone = ?");
     $stmt->execute([$telefone]);
     $cliente = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -27,13 +25,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_GET['id'])) {
         $cliente_id = $cliente['id'];
     }
 
-    // Insere agendamento
+
     $stmt = $conn->prepare("INSERT INTO agendamento_novo (barbeiro_id, cliente_id, data, hora, servico) VALUES (?, ?, ?, ?, ?)");
     $stmt->execute([$barbeiro_id, $cliente_id, $data, $hora, $servico]);
 
-    // Redireciona para si mesmo com o ID
     $agendamento_id = $conn->lastInsertId();
-    header("Location: concluido.php?id=$agendamento_id");
+      header("Location: concluido.php?id=$agendamento_id");
     exit;
 }
 

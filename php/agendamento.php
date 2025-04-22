@@ -33,7 +33,7 @@ $horarios_disponiveis = [];
 if ($barbeiro_id) {
     $horarios_disponiveis = horariosConfigurados($conn, $barbeiro_id, $data_selecionada);
 
-    // Remove horários já agendados
+ 
     $stmt = $conn->prepare("SELECT hora FROM agendamento_novo WHERE data = ? AND barbeiro_id = ?");
     $stmt->execute([$data_selecionada, $barbeiro_id]);
     $horarios_ocupados = $stmt->fetchAll(PDO::FETCH_COLUMN);

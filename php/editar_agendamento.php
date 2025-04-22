@@ -182,5 +182,20 @@ foreach ($horarios_possiveis as $hora) {
 
       
   
+<script>
+document.getElementById('telefone').addEventListener('input', function (e) {
+    let valor = e.target.value.replace(/\D/g, ''); // remove tudo que não é número
+
+    if (valor.length > 11) valor = valor.slice(0, 11); // limita a 11 dígitos
+
+    if (valor.length <= 10) {
+        valor = valor.replace(/(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
+    } else {
+        valor = valor.replace(/(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
+    }
+
+    e.target.value = valor;
+});
+</script>
 </body>
 </html>
