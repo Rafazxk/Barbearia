@@ -4,6 +4,7 @@
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
 }
+
 #logo_name{
   width: 100px;
   margin-right: 45px;
@@ -12,54 +13,35 @@
 h1{
   margin-top: 50px;
   color: white;
-  border-bottom: 2px solid white;
+  font-size: 30px;
 }
+
 body{
-  background: #333;
+  background: #111;
   text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
+
 header{
   background: #111;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 30vh;
+  height: 10vh;
   width: 100%;
   border-bottom: 2px solid white;
 }
-header nav{
-   margin-top: 50px;
 
-}
-header nav a {
-  padding: 15px;
-  border-radius: 15px;
-  text-decoration: none;
-  color: gold;
-  font-size:25px;
-  transition: 0.5s;
-}
-header nav a:hover{
-  color: white;
-  background: gold;
-}
-.principal{
-  width: 70%;
+.voltar{
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 40px;
+  border-radius: 50%;
 }
 .principal form{
   width: 100%;
-  
 }
 .escolha_barbeiro{
   margin-top: 30px;
@@ -88,6 +70,9 @@ header nav a:hover{
   width: 100%;
   font-size: 20px;
   display: flex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-direction: column;
   gap: 10px;
 }
@@ -102,11 +87,15 @@ header nav a:hover{
 }
 
 .escolha_barbeiro .data input{
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 10px; 
   font-size: 20px;
   font-weight: 700;
   border-radius: 10px;
   text-align: center;
+  width: 100%;
 }
 
 .servico{
@@ -196,30 +185,121 @@ button:hover{
   color: white;
   transform: scale(1.2);
 }
-
+.voltar{
+     background-color: gold;
+     position: fixed;
+     left: 10px;  
+     top: 80px;
+     width: 55px;
+     transform: scaleX(-1);
+  }
 
 @media(max-width: 768px) {
   h1{
     font-size: 20px;
   }
   header{
-    
+    height: 20vh;
   }
   header nav a{
     padding: 10px;
     font-size: 15px;
   }
 .voltar{
-    position: fixed;
-     left: 10px;  
-     top: 50px;
-     padding: 10px;
-     border-radius: 10px;
-     font-weight: 600;
-     background: gold;
-     color: black;
-     text-decoration: none;
+   position: fixed;
+   left: 10px;  
+   top: 70px;
+   width: 30px;
+   background-color: gold;
+   transform: scaleX(-1);
+   transition: 0.3s;
   }
   
+.voltar:hover{
+  transform: scaleX(-1) scale(1.1);
+  background: white;
+}
+   
+  .principal form{
+  width: 100%;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+}
+
+.escolha_barbeiro .data input{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px; 
+  font-size: 20px;
+  font-weight: 700;
+  border-radius: 10px;
+  text-align: center;
+  width: 100%;
+}
+
+.escolha_barbeiro{
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(255, 215, 0, 0.5);
+  width: 90%;
+  padding: 40px;
+  background: #111;
+  color: white;
+  border-radius: 14px;
+  gap: 30px;
+}
   
+.servico{
+  margin-top: 20px;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(255, 215, 0, 0.5);
+  width: 90%;
+  padding: 40px;
+  background: #111;
+  color: white;
+  border-radius: 14px;
+  gap: 30px;
+}
+  
+.hora_agendamento{
+  margin-top: 20px;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(255, 215, 0, 0.5);
+  width: 90%;
+  padding: 40px;
+  background: #111;
+  color: white;
+  border-radius: 14px;
+  gap: 30px;
+}
+
+.informacoes_cliente{
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(255, 215, 0, 0.5);
+  width: 90%;
+  padding: 37px;
+  background: #111;
+  color: white;
+  border-radius: 14px;
+  gap: 30px;
+  font-size: 20px;
+}
 }

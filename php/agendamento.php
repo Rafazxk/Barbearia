@@ -52,15 +52,14 @@ if ($barbeiro_id) {
 </head>
 <body>
   <header>
-    <a class="voltar" href="../index.html">Voltar</a>
+    <a href="../index.html"><img src="../imagens/seta.png"
+    class="voltar"></a>
   <img src="../imagens/tk_logo.png" id="logo_name">
-       <nav>
-        <a href="../index.html">Inicio</a>
-       </nav>  
+  
   </header>
 
 <main class="principal">
-   <h1>Escolha seu Agendamento</h1>
+   <h1>Faça seu Agendamento!</h1>
   <!-- escolha do barbeiro -->
 
   

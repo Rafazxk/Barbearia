@@ -19,7 +19,6 @@ $barbeiros = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 //  busca os agendamentos e ganhos
 if ($barbeiro_id) {
-    // Filtro de datas
     $data_inicio = isset($_GET['inicio']) ? $_GET['inicio'] : date('Y-m-d');
     $data_fim = isset($_GET['fim']) ? $_GET['fim'] : date('Y-m-d');
 
@@ -113,7 +112,6 @@ if ($barbeiro_id) {
         <h3>Ganhos Totais: R$ <?= number_format($ganhos_totais, 2, ',', '.') ?></h3>
 
 <section class="data">
-  
 <h3>Filtrar por data</h3>
 <form method="GET">
   <div class="inicio">

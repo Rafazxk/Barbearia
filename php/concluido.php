@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_GET['id'])) {
     exit;
 }
 
-// Exibe os dados do agendamento (se ID estiver definido)
+// Exibe os dados do agendamento se id estiver definido
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
     $stmt = $conn->prepare("SELECT a.id, a.data, a.hora, s.nome AS servico, b.nome AS barbeiro, c.nome AS cliente, c.telefone
@@ -65,13 +65,14 @@ if (isset($_GET['id'])) {
 ?>
 
  <!DOCTYPE html>
-        <html lang="pt-br">
-        <head>
-            <meta charset="UTF-8">
-             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Agendamento Concluído</title>
-            <link rel="stylesheet" href="../styles/concluido.css">
-            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+ <html lang="pt-br">
+   <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agendamento Concluído</title>
+<link rel="stylesheet" href="../styles/concluido.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
       
         </head>
@@ -94,12 +95,9 @@ if (isset($_GET['id'])) {
             
 <div class="compartilhar">
   <h2>Compartilhe seu Agendamento</h2>
-  
-  <div class="icones">
-  
+
  <button onclick="compartilharImagem()">Compartilhar</button>
-  
-  </div>
+
   <button onclick="baixarImagem()">Clique para baixar</button>
 </div>
 <script>
@@ -135,7 +133,10 @@ async function compartilharImagem() {
 }
 
  </script>
-        </body>
-        </html>
 
-   
+</body>
+
+
+</html>
+
+
