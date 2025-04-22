@@ -17,7 +17,7 @@ h1{
 header{
   padding: 40px;
   background: #333;
-  height: 20vh; 
+  height: 30vh; 
   border-bottom: 2px solid white;
 }
 header nav{
@@ -28,6 +28,7 @@ header nav{
   align-items: center;
   justify-content: center;
 }
+
 #sair{
   background: gold;
   padding: 10px;
@@ -104,6 +105,8 @@ select {
   margin: 0 auto;
   margin-top: 20px;
   background: #333;
+  display: flex;
+  flex-direction: column;
   padding: 40px;
   border-radius: 10px;
   width: 80%;

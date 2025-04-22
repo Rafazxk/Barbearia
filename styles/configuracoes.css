@@ -17,6 +17,7 @@ h1{
  color: gold; 
  margin-top: 40px;
 }
+
 form{
   margin-top: 50px;
   background-color: #222;
@@ -32,11 +33,21 @@ form label{
   font-size: 20px;
 }
 form input{
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   width: 90%;
   padding: 15px; 
   border-radius: 10px;
 }
 form select{
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   width: 90%;
   padding: 20px; 
   border-radius: 10px;
@@ -59,8 +70,9 @@ form button:hover{
 h2{
 margin-top: 50px;  
 }
-
 table{
+  width: 90%;
   margin-top: 20px;
-  border: gold;
+  padding: 20px;
+  border: white;
 }

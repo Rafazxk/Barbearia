@@ -95,7 +95,7 @@ if ($barbeiro_id) {
     <!-- Filtro de barbeiros -->
 <div class="escolha">
     <form method="get" action="barbeiro.php">
-        <label for="barbeiro">Escolha o Barbeiro:</label>
+       
         <select name="id" id="barbeiro">
             <option value="">Todos</option>
             <?php foreach ($barbeiros as $barbeiro): ?>

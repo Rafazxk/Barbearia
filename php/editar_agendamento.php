@@ -1,22 +1,20 @@
 <?php
 include "conexao.php";
 
-// Verifica se um ID de agendamento foi passado
 if (!isset($_GET['id']) || empty($_GET['id'])) {
-    echo "ID inválido!";
-    exit;
+   echo "ID inválido!";
+   exit;
 }
 
 $id = $_GET['id'];
-
-// Verifica se o ID do barbeiro foi passado via GET (se for necessário no seu formulário)
 $barbeiro_id = isset($_GET['barbeiro_id']) ? $_GET['barbeiro_id'] : null;
 
-// Obtém a lista de serviços disponíveis
+// Definir data selecionada corretamente
+$data_selecionada = $_GET['data'] ?? null;
+
 $stmt = $conn->query("SELECT id, nome, preco FROM servico");
 $servicos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Obtém os dados do agendamento
 $stmt = $conn->prepare("SELECT a.id, a.cliente_id, c.nome AS cliente_nome, c.telefone, a.data, a.hora, a.servico, s.nome AS servico_nome, s.preco, a.barbeiro_id
 FROM agendamento_novo a
 JOIN cliente c ON a.cliente_id = c.id
@@ -26,46 +24,69 @@ $stmt->execute([$id]);
 $agendamento = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$agendamento) {
-    echo "Agendamento não encontrado!";
-    exit;
+   echo "Agendamento não encontrado!";
+   exit;
 }
 
 $cliente_id = $agendamento['cliente_id'];
-
-// Consulta os dados do cliente
 $stmt_cliente = $conn->prepare("SELECT nome, telefone FROM cliente WHERE id = ?");
 $stmt_cliente->execute([$cliente_id]);
 $cliente = $stmt_cliente->fetch(PDO::FETCH_ASSOC);
 
-// Consulta a lista de barbeiros disponíveis
 $barbeiros = $conn->query("SELECT id, nome FROM barbeiro")->fetchAll(PDO::FETCH_ASSOC);
 
-// Se o formulário for enviado, atualiza os dados do agendamento
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nome = $_POST['nome'] ?? null;
-    $telefone = $_POST['telefone'] ?? null;
-    $data = $_POST['data'] ?? '';
-    $hora = $_POST['hora'] ?? '';
-    $servico_id = $_POST['servico_id'] ?? '';
-    $barbeiro_id = $_POST['barbeiro_id'] ?? '';
+   $nome = $_POST['nome'] ?? null;
+   $telefone = $_POST['telefone'] ?? null;
+   $data = $_POST['data'] ?? null;
+   $hora = $_POST['hora'] ?? '';
+   $servico_id = $_POST['servico_id'] ?? '';
+   $barbeiro_id = $_POST['barbeiro_id'] ?? '';
 
-    if (!$data || !$hora || !$servico_id || !$barbeiro_id) {
-        echo "Todos os campos são obrigatórios!";
-        exit;
-    }
+   if (!$data || !$hora || !$servico_id || !$barbeiro_id) {
+       echo "Todos os campos são obrigatórios!";
+       exit;
+   }
 
-    // Atualiza o agendamento no banco de dados
-    $stmt_update = $conn->prepare("UPDATE agendamento_novo SET data = ?, hora = ?, servico = ?, barbeiro_id = ?, cliente_nome = ?, telefone = ? WHERE id = ?");
-    
-    if ($stmt_update->execute([$data, $hora, $servico_id, $barbeiro_id, $nome, $telefone, $id])) {
-        header("Location: concluido.php?id=$id");
-        exit;
-    } else {
-        echo "Erro ao atualizar!";
+   $stmt_update = $conn->prepare("UPDATE agendamento_novo SET data = ?, hora = ?, servico = ?, barbeiro_id = ? WHERE id = ?");
+   if ($stmt_update->execute([$data, $hora, $servico_id, $barbeiro_id, $id])) {
+       if ($nome !== $cliente['nome'] || $telefone !== $cliente['telefone']) {
+           $stmt_cliente_update = $conn->prepare("UPDATE cliente SET nome = ?, telefone = ? WHERE id = ?");
+           $stmt_cliente_update->execute([$nome, $telefone, $cliente_id]);
+       }
+       header("Location: concluido.php?id=$id");
+       exit;
+   } else {
+       echo "Erro ao atualizar!";
+   }
+}
+
+// Definir data selecionada (caso GET esteja vazio, usa do agendamento)
+$data_selecionada = $data_selecionada ?? $agendamento['data'];
+
+// Buscar horários agendados
+$horarios_disponiveis = [];
+if ($barbeiro_id && $data_selecionada) {
+    $stmt = $conn->prepare("SELECT hora FROM agendamento_novo WHERE barbeiro_id = ? AND data = ?");
+    $stmt->execute([$barbeiro_id, $data_selecionada]);
+    $horarios_agendados = $stmt->fetchAll(PDO::FETCH_COLUMN);
+} else {
+    $horarios_agendados = [];
+}
+
+$horarios_possiveis = [
+    "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30",
+    "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30",
+    "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00"
+];
+
+// Gerar horários disponíveis
+foreach ($horarios_possiveis as $hora) {
+    if (!in_array($hora, $horarios_agendados) || $hora == $agendamento['hora']) {
+        $horarios_disponiveis[] = $hora;
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -105,7 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   <div class="data">
         <label for="data">Data:</label>
-        <input type="date" name="data" id="data" value="<?= $_GET['data'] ?? $agendamento['data'] ?>" onchange="this.form.submit()">
+        <input type="date" name="data" value="<?= $data_selecionada ?>">
   </div>     
     </form>
   </div>
@@ -126,19 +147,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <?php endforeach; ?>
             </select>
  </div>
-<div class="hora_agendamento">
-    <label for="hora">Horário:</label>
+ <div class="hora_agendamento">
+ <label for="hora">Horário:</label>
     <select name="hora" id="hora" required>
         <?php
-                $horarios_disponiveis = [];
-                if (empty($horarios_disponiveis)):
-                ?>
-                    <option value="<?= $agendamento['hora'] ?>">Nenhum horário disponível</option>
-                <?php else: ?>
-                    <?php foreach ($horarios_disponiveis as $h): ?>
-                        <option value="<?= $h ?>" <?= ($h == $agendamento['hora']) ? 'selected' : '' ?>><?= $h ?></option>
-                    <?php endforeach; ?>
-                <?php endif; ?>
+        if (empty($horarios_disponiveis)) {
+            // Se não houver horários disponíveis
+            echo '<option value="">Nenhum horário disponível</option>';
+        } else {
+            // Preenche o select com os horários disponíveis
+            foreach ($horarios_disponiveis as $h) {
+                echo '<option value="' . $h . '" ' . ($h == $agendamento['hora'] ? 'selected' : '') . '>' . $h . '</option>';
+            }
+        }
+        ?>
     </select>
 </div>
 

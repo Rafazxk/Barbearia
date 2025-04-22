@@ -31,7 +31,7 @@ header{
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 10vh;
+  height: 20vh;
   width: 100%;
   border-bottom: 2px solid white;
 }
@@ -99,6 +99,7 @@ header{
 }
 
 .servico{
+  margin-top: 40px;
   font-size: 20px;
   display: flex;
   flex-direction: column;
@@ -189,7 +190,7 @@ button:hover{
      background-color: gold;
      position: fixed;
      left: 10px;  
-     top: 80px;
+     top: 50px;
      width: 55px;
      transform: scaleX(-1);
   }

@@ -5,14 +5,15 @@ include "conexao.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_GET['id'])) {
  
-   
+  
     $data = $_POST['data'] ?? '';
     $hora = $_POST['hora'] ?? '';
     $nome = $_POST['nome'] ?? '';
     $telefone = $_POST['telefone'] ?? '';
     $servico = $_POST['servico_id'] ?? null;  
     $barbeiro_id = $_POST['barbeiro_id'] ?? null;
-
+    $data = $_GET['data'] ?? null;
+     
     // Verifica cliente
     $stmt = $conn->prepare("SELECT id FROM cliente WHERE telefone = ?");
     $stmt->execute([$telefone]);
@@ -62,6 +63,8 @@ if (isset($_GET['id'])) {
         exit;
     }
   }
+  
+
 ?>
 
  <!DOCTYPE html>
@@ -88,8 +91,7 @@ if (isset($_GET['id'])) {
                 
   <div class="alteracao">
                      <a href="editar_agendamento.php?id=<?= $agendamento['id'] ?>">Alterar</a>
-    
-    <a href="excluir.php">Excluir Agendamento </a>
+                     <a href="excluir.php?id=<?= $agendamento['id'] ?>">Excluir Agendamento</a>
   </div>
             </div>
             

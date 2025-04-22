@@ -31,7 +31,7 @@ header{
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 10vh;
+  height: 20vh;
   width: 100%;
   border-bottom: 2px solid white;
 }
@@ -191,7 +191,7 @@ button:hover{
      background-color: gold;
      position: fixed;
      left: 10px;  
-     top: 75px;
+     top: 50px;
      width: 55px;
      transform: scaleX(-1);
   }

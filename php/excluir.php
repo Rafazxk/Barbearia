@@ -13,7 +13,7 @@ $id = $_GET['id'];
 $stmt = $conn->prepare("DELETE FROM agendamento_novo WHERE id = ?");
 if ($stmt->execute([$id])) {
     echo "Agendamento excluído com sucesso!";
-    echo "<br><a href='barbeiro.php'>Voltar</a>";
+    echo "<br><a href='agendamento.php'>Voltar</a>";
 } else {
     echo "Erro ao excluir agendamento!";
 }
